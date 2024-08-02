@@ -164,7 +164,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mPinnedKeys = findViewById(R.id.pinned_keys);
         mToolbar = findViewById(R.id.toolbar);
         mToolbarContainer = findViewById(R.id.toolbar_container);
-        mIvOscar = findViewById(R.id.iv_oscar);
+        mIvOscar = findViewById(R.id.iv_oscar_keyboard_ai);
 
 
         for (int pos = 0; pos < SuggestedWords.MAX_SUGGESTIONS; pos++) {
