@@ -50,11 +50,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import helium314.keyboard.AIEngine.AIOutputEvent;
+import helium314.keyboard.AIEngine.OnTextUpdatedListener;
 import helium314.keyboard.AIEngine.OutputTextListener;
 import helium314.keyboard.AIEngine.SharedViewModel;
 import helium314.keyboard.AIEngine.SummarizeUiState;
 import helium314.keyboard.AIEngine.SummarizeViewModel;
 import helium314.keyboard.AIEngine.SummarizeViewModelFactory;
+import helium314.keyboard.AIEngine.TextUpdatedEvent;
 import helium314.keyboard.accessibility.AccessibilityUtils;
 import helium314.keyboard.gemini.GeminiClient;
 import helium314.keyboard.keyboard.Key;
@@ -107,9 +109,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.ai.client.generativeai.GenerativeModel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public final class SuggestionStripView extends RelativeLayout implements OnClickListener,
-        OnLongClickListener, SummarizeTextProvider, RecognitionListener, OutputTextListener {
+        OnLongClickListener, SummarizeTextProvider, RecognitionListener, OnTextUpdatedListener {
 
     LatinIME mLatinIME;
 
@@ -126,12 +129,21 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     GeminiClient geminiClient = new GeminiClient(); // Assuming you have a way to create a GeminiClient instance
     GenerativeModel generativeModel = geminiClient.getGeminiFlashModel();
-    SuggestionStripView suggestionStripView = null; // Assuming you have a reference
 
 
-    public static String globalText = "This is a global text";
+
+    public TextView getAiOutputTextView() {
+        return aiOutput;
+    }
 
 
+
+    @Subscribe
+    public void onTextUpdated(TextUpdatedEvent event) {
+        aiOutput.setText(event.getText());
+        //log received text
+        Log.d("SuggestionStripView", "onTextUpdated: " + event.getText());
+    }
     //private TextView aiOutput;
 
 //    public SuggestionStripViewAIEngine(Context context, AttributeSet attrs, TextView aiOutput) {
@@ -305,13 +317,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
 
     @Override
-    public void onOutputTextChanged(@NonNull String outputText) {
-        outputBuilder.append(outputText);
-
-        Log.d("AIImproved", "onOutputTextChangedAppend" + outputText);
-        aiOutput.setText(outputBuilder.toString());
-        Log.d("AIImproved", "onOutputTextChanged" + outputText);
-
+    public void onTextUpdated(@NonNull String text) {
+        Log.d("SuggestionStripViewOnTextUpdated", "onTextUpdated: " + text);
+        aiOutput.setText(text);
+        Log.d("SuggestionStripViewOnTextUpdated", "onTextUpdated: " + text);
     }
 
 //    private String summarizedText = "";
@@ -323,16 +332,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 //    }
 
 
-
     public interface Listener {
         void pickSuggestionManually(SuggestedWordInfo word);
         void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
         void removeSuggestion(final String word);
-    }
-
-    public void myMethod() {
-        LatinIME latinIME = new LatinIME(); // Or obtain an instance from elsewhere
-        mLatinIME = latinIME;
     }
 
     public static boolean DEBUG_SUGGESTIONS;
@@ -355,7 +358,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     private final ImageView mIvOscar;
 
-    private final TextView aiOutput;
+    public final TextView aiOutput;
 
     private final ImageView ivOscarVoiceInput;
 
@@ -423,6 +426,10 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     @SuppressLint("InflateParams") // does not seem suitable here
     public SuggestionStripView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
+
+        EventBus.getDefault().register(this);
+
+
         final Colors colors = Settings.getInstance().getCurrent().mColors;
         final SharedPreferences prefs = DeviceProtectedUtils.getSharedPreferences(context);
         DEBUG_SUGGESTIONS = prefs.getBoolean(DebugSettings.PREF_SHOW_SUGGESTION_INFOS, false);
@@ -686,7 +693,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility") // no need for View#performClick, we return false mostly anyway
+    @SuppressLint("ClickableViewAccessibility")
+    // no need for View#performClick, we return false mostly anyway
     private boolean onLongClickSuggestion(final TextView wordView) {
         boolean showIcon = true;
         if (wordView.getTag() instanceof Integer) {
@@ -703,7 +711,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             wordView.setEllipsize(TextUtils.TruncateAt.END);
             AtomicBoolean downOk = new AtomicBoolean(false);
             wordView.setOnTouchListener((view1, motionEvent) -> {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && downOk.get()) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     final float x = motionEvent.getX();
                     final float y = motionEvent.getY();
                     if (0 < x && x < w && 0 < y && y < h) {
@@ -1068,6 +1076,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         recordStatus = true;
 
     }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
