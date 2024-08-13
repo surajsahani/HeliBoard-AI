@@ -33,7 +33,6 @@ import helium314.keyboard.keyboard.internal.KeyDrawParams;
 import helium314.keyboard.keyboard.internal.KeyVisualAttributes;
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode;
 import helium314.keyboard.latin.AudioAndHapticFeedbackManager;
-import helium314.keyboard.latin.R;
 import helium314.keyboard.latin.RichInputMethodSubtype;
 import helium314.keyboard.latin.common.ColorType;
 import helium314.keyboard.latin.common.Colors;
@@ -44,6 +43,8 @@ import helium314.keyboard.latin.utils.ResourceUtils;
 import org.jetbrains.annotations.NotNull;
 
 import static helium314.keyboard.latin.common.Constants.NOT_A_COORDINATE;
+
+import com.oscar.aikeyboard.R;
 
 /**
  * View class to implement Emoji palettes.
