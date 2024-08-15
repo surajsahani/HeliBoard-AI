@@ -19,6 +19,7 @@ import androidx.core.util.TypedValueCompat;
 
 import com.oscar.aikeyboard.R;
 import com.oscar.aikeyboard.keyboard.internal.BatchInputArbiter;
+import com.oscar.aikeyboard.keyboard.internal.BatchInputArbiter.BatchInputArbiterListener;
 import com.oscar.aikeyboard.keyboard.internal.BogusMoveEventDetector;
 import com.oscar.aikeyboard.keyboard.internal.DrawingProxy;
 import com.oscar.aikeyboard.keyboard.internal.GestureEnabler;
@@ -43,7 +44,7 @@ import java.util.Locale;
 import java.util.WeakHashMap;
 
 public final class PointerTracker implements PointerTrackerQueue.Element,
-        BatchInputArbiter.BatchInputArbiterListener {
+        BatchInputArbiterListener {
     private static final String TAG = PointerTracker.class.getSimpleName();
     private static final boolean DEBUG_EVENT = false;
     private static final boolean DEBUG_MOVE_EVENT = false;
@@ -152,7 +153,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private boolean mIsTrackingForActionDisabled;
 
     // the popup keys panel currently being shown. equals null if no panel is active.
-    private com.oscar.aikeyboard.keyboard.PopupKeysPanel mPopupKeysPanel;
+    private PopupKeysPanel mPopupKeysPanel;
 
     // true if this pointer is in the dragging finger mode.
     boolean mIsInDraggingFinger;
@@ -1152,7 +1153,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
 
         setReleasedKeyGraphics(key, false);
-        final com.oscar.aikeyboard.keyboard.PopupKeysPanel popupKeysPanel = sDrawingProxy.showPopupKeysKeyboard(key, this);
+        final PopupKeysPanel popupKeysPanel = sDrawingProxy.showPopupKeysKeyboard(key, this);
         if (popupKeysPanel == null) {
             return;
         }

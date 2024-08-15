@@ -12,16 +12,6 @@ import android.os.Build;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 
-import helium314.keyboard.keyboard.internal.KeyboardBuilder;
-import helium314.keyboard.keyboard.internal.KeyboardParams;
-import helium314.keyboard.keyboard.internal.UniqueKeysCache;
-import helium314.keyboard.keyboard.internal.keyboard_parser.LocaleKeyboardInfos;
-import helium314.keyboard.keyboard.internal.keyboard_parser.LocaleKeyboardInfosKt;
-import helium314.keyboard.keyboard.internal.keyboard_parser.RawKeyboardParser;
-import helium314.keyboard.latin.RichInputMethodSubtype;
-import helium314.keyboard.latin.utils.InputTypeUtils;
-import helium314.keyboard.latin.utils.Log;
-import helium314.keyboard.latin.utils.ScriptUtils;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
@@ -142,7 +132,7 @@ public final class KeyboardLayoutSet {
         // specified as an elementKeyboard attribute in the file.
         // The KeyboardId is an internal key for a Keyboard object.
 
-        final KeyboardId id = new KeyboardId(keyboardLayoutSetElementId, mParams);
+        final com.oscar.aikeyboard.keyboard.KeyboardId id = new com.oscar.aikeyboard.keyboard.KeyboardId(keyboardLayoutSetElementId, mParams);
         try {
             return getKeyboard(id);
         } catch (final RuntimeException e) {

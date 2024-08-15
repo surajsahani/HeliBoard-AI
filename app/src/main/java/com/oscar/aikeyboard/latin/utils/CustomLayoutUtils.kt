@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package helium314.keyboard.latin.utils
+package com.oscar.aikeyboard.latin.utils
 
 import android.content.Context
 import android.net.Uri
@@ -27,7 +27,10 @@ import java.math.BigInteger
 
 fun loadCustomLayout(uri: Uri?, languageTag: String, context: Context, onAdded: (String) -> Unit) {
     if (uri == null)
-        return infoDialog(context, context.getString(R.string.layout_error, "layout file not found"))
+        return infoDialog(
+            context,
+            context.getString(R.string.layout_error, "layout file not found")
+        )
     val layoutContent: String
     try {
         val tmpFile = File(context.filesDir.absolutePath + File.separator + "tmpfile")
@@ -35,7 +38,10 @@ fun loadCustomLayout(uri: Uri?, languageTag: String, context: Context, onAdded: 
         layoutContent = tmpFile.readText()
         tmpFile.delete()
     } catch (e: IOException) {
-        return infoDialog(context, context.getString(R.string.layout_error, "cannot read layout file"))
+        return infoDialog(
+            context,
+            context.getString(R.string.layout_error, "cannot read layout file")
+        )
     }
 
     var name = ""
@@ -186,12 +192,16 @@ fun editCustomLayout(layoutName: String, context: Context, startContent: String?
         .setView(editText)
         .setPositiveButton(R.string.save) { _, _ ->
             val content = editText.text.toString()
-            if (!checkLayout(content, context)) {
+            val isJson = checkLayout(content, context)
+            if (isJson == null) {
                 editCustomLayout(layoutName, context, content)
                 infoDialog(context, context.getString(R.string.layout_error, Log.getLog(10).lastOrNull { it.tag == TAG }?.message))
             } else {
+                val wasJson = file.name.substringAfterLast(".") == "json"
                 file.parentFile?.mkdir()
                 file.writeText(content)
+                if (isJson != wasJson) // unlikely to be needed, but better be safe
+                    file.renameTo(File(file.absolutePath.substringBeforeLast(".") + "." + if (isJson) "json" else "txt"))
                 onCustomLayoutFileListChanged()
                 KeyboardSwitcher.getInstance().forceUpdateKeyboardTheme(context)
             }
