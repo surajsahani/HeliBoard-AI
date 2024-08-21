@@ -530,12 +530,6 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="layout_numpad" tools:keep="@string/layout_numpad">Numpad</string>
     <!-- Name for numpad layout in landscape mode -->
     <string name="layout_numpad_landscape" tools:keep="@string/layout_numpad_landscape">Numpad (landscape)</string>
-    <!-- Name for number row layout -->
-    <string name="layout_number_row" tools:keep="@string/layout_number_row">Number row</string>
-    <!-- Name for bottom row layout in emoji view -->
-    <string name="layout_emoji_bottom_row" tools:keep="@string/layout_emoji_bottom_row">Emoji bottom row</string>
-    <!-- Name for bottom row layout in clipboard view -->
-    <string name="layout_clip_bottom_row" tools:keep="@string/layout_clip_bottom_row">Clipboard bottom row</string>
     <!-- Title for customizing background image -->
     <string name="customize_background_image">Set background image</string>
     <!-- Title for customizing currencies -->
@@ -704,8 +698,6 @@ New dictionary:
     <string name="user_dict_add_word_button">Add a word</string>
     <!-- Option for choosing theme style [CHAR LIMIT=33] -->
     <string name="theme_style">Style</string>
-    <!-- Option for choosing icon style (same options as theme_style) -->
-    <string name="icon_style">Icon style</string>
     <!-- Style name for Rounded style -->
     <string name="style_name_Rounded" tools:keep="@string/style_name_Rounded">Rounded</string>
     <!-- Option for choosing colors [CHAR LIMIT=33] -->
@@ -965,7 +957,7 @@ New dictionary:
     10.We reserve the right to modify these Terms at any time. Your continued use of the App after any such changes constitutes your acceptance of the new Terms.\n
     11.If you have any questions about these Terms, please contact us at <a href="mailto:support.oscar@samyarth.org"><font color="#000000">support.oscar@samyarth.org</font></a>.
     </string>
-    <string name="privacy_policy" translatable="false">
+    <string name="privacy_policy">
         1.We value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the Oscar Keyboard App.\n
 2.We collect personal information such as your email address and user preferences when you create an account or use the App. We also collect information about your usage of the App, such as the features you use, the time and duration of your use, and error reports.\n
 3.We use your information to provide and maintain the App, improve and personalize your experience, monitor and analyze usage and trends, send you updates, security alerts, and support messages, and comply with legal obligations.\n
@@ -978,5 +970,4 @@ New dictionary:
 10.If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support.oscar@samyarth.org"><font color="#000000">support.oscar@samyarth.org</font></a>.
 
     </string>
-    <string name="email_us" translatable="false">Email us</string>
 </resources>
