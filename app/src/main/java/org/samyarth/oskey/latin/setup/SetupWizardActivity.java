@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
 
-package org.samyarth.oskey.latin.setup;
+package com.oscar.aikeyboard.latin.setup;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,15 +36,15 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import org.samyarth.oskey.R;
-import org.samyarth.oskey.latin.setup.MainActivity;
-
-import org.samyarth.oskey.latin.settings.SettingsActivity;
-import org.samyarth.oskey.latin.utils.ActivityThemeUtils;
-import org.samyarth.oskey.latin.utils.JniUtils;
-import org.samyarth.oskey.latin.utils.LeakGuardHandlerWrapper;
-import org.samyarth.oskey.latin.utils.ResourceUtils;
-import org.samyarth.oskey.latin.utils.UncachedInputMethodManagerUtils;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.oscar.aikeyboard.R;
+import com.oscar.aikeyboard.latin.settings.SettingsActivity;
+import com.oscar.aikeyboard.latin.utils.ActivityThemeUtils;
+import com.oscar.aikeyboard.latin.utils.JniUtils;
+import com.oscar.aikeyboard.latin.utils.LeakGuardHandlerWrapper;
+import com.oscar.aikeyboard.latin.utils.ResourceUtils;
+import com.oscar.aikeyboard.latin.utils.UncachedInputMethodManagerUtils;
 
 import java.util.ArrayList;
 
@@ -129,6 +130,8 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         if (actionBar == null) {
             return;
         }
+        FirebaseApp.initializeApp(this);
+
         actionBar.hide();
         getWindow().setStatusBarColor(getResources().getColor(R.color.setup_background));
         ActivityThemeUtils.setActivityTheme(this);
@@ -381,8 +384,21 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             finish();
             return;
         }
-        updateSetupStepView();
-    }
+
+            // Log the current step number in Firebase Crashlytics
+            FirebaseCrashlytics.getInstance().setCustomKey("Current Step Number", mStepNumber);
+
+            try {
+                updateSetupStepView();
+            } catch (NullPointerException e) {
+                // Log the NullPointerException in Firebase Crashlytics
+                FirebaseCrashlytics.getInstance().recordException(e);
+                FirebaseCrashlytics.getInstance().log("NullPointerException in updateSetupStepView in onResume");
+            } catch (Exception e) {
+                // Log any other non-fatal exception in Firebase Crashlytics
+                FirebaseCrashlytics.getInstance().recordException(e);
+            }
+           }
 
     @Override
     public void onBackPressed() {

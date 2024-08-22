@@ -61,6 +61,7 @@ class KeyboardselectionActivity : AppCompatActivity(),
     val geminiClient = GeminiClient() // Assuming you have a way to create a GeminiClient instance
     val generativeModel = geminiClient.geminiFlashModel
     private var suggestionStripView: SuggestionStripView? = null // Assuming you have a reference
+    private val crashlytics: FirebaseCrashlytics by lazy { FirebaseCrashlytics.getInstance() }
 
 
 // Assuming you have a way to create a GenerativeModel instance
@@ -101,6 +102,7 @@ class KeyboardselectionActivity : AppCompatActivity(),
         tvEnableKeyboard = findViewById(R.id.tv_enableKeyboard)
         tvWelcomeText = findViewById(R.id.tv_welcomeText)
         //Initialize my viewModel here
+        FirebaseApp.initializeApp(this);
 
 
         //todo not needed now

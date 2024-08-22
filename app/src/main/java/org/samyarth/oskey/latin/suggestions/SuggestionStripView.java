@@ -107,6 +107,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         OnLongClickListener, SummarizeTextProvider, RecognitionListener, OnTextUpdatedListener {
 
     LatinIME mLatinIME;
+    private FirebaseCrashlytics crashlytics;
 
     private Key mCurrenteKey;
 
@@ -649,21 +650,21 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     private final PopupKeysPanel.Controller mMoreSuggestionsController =
             new PopupKeysPanel.Controller() {
-        @Override
-        public void onDismissPopupKeysPanel() {
-            mMainKeyboardView.onDismissPopupKeysPanel();
-        }
+                @Override
+                public void onDismissPopupKeysPanel() {
+                    mMainKeyboardView.onDismissPopupKeysPanel();
+                }
 
-        @Override
-        public void onShowPopupKeysPanel(final PopupKeysPanel panel) {
-            mMainKeyboardView.onShowPopupKeysPanel(panel);
-        }
+                @Override
+                public void onShowPopupKeysPanel(final PopupKeysPanel panel) {
+                    mMainKeyboardView.onShowPopupKeysPanel(panel);
+                }
 
-        @Override
-        public void onCancelPopupKeysPanel() {
-            dismissMoreSuggestionsPanel();
-        }
-    };
+                @Override
+                public void onCancelPopupKeysPanel() {
+                    dismissMoreSuggestionsPanel();
+                }
+            };
 
     public boolean isShowingMoreSuggestionPanel() {
         return mMoreSuggestionsView.isShowingInParent();
