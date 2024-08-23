@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.preference.SwitchPreference;
+import com.oscar.aikeyboard.R;
 
 import helium314.keyboard.keyboard.KeyboardSwitcher;
 import helium314.keyboard.latin.R;
