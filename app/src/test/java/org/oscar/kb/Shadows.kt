@@ -12,7 +12,6 @@ import org.inputmethod.latin.utils.BinaryDictionaryUtils
 import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
 import org.robolectric.shadows.ShadowInputMethodManager
-import org.oscar.kb.BuildConfig
 import java.util.*
 
 @Implements(LocaleManagerCompat::class)
@@ -28,8 +27,8 @@ class ShadowInputMethodManager2 : ShadowInputMethodManager() {
     @Implementation
     override fun getInputMethodList() = listOf(
         if (BuildConfig.BUILD_TYPE == "debug")
-            InputMethodInfo("helium314.keyboard.debug", "LatinIME", "HeliBoard debug", null)
-        else InputMethodInfo("helium314.keyboard", "LatinIME", "HeliBoard", null),
+            InputMethodInfo("org.oscar.kb.debug", "LatinIME", "Oscar debug", null)
+        else InputMethodInfo("org.oscar.kb", "LatinIME", "Oscar", null),
     )
     @Implementation
     fun getShortcutInputMethodsAndSubtypes() = emptyMap<InputMethodInfo, List<InputMethodSubtype>>()

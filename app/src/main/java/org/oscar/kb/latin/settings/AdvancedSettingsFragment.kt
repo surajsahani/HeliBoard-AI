@@ -23,10 +23,10 @@ import androidx.core.content.edit
 import androidx.core.widget.doAfterTextChanged
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-import org.oscar.kb.BuildConfig
 import org.oscar.kb.R
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.oscar.kb.BuildConfig
 import org.oscar.kb.dictionarypack.DictionaryPackConstants
 import org.oscar.kb.latin.utils.ChecksumCalculator
 import org.oscar.kb.keyboard.KeyboardLayoutSet
