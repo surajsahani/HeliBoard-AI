@@ -91,7 +91,8 @@ sealed interface KeyData : AbstractKeyData {
 
         private fun getShiftLabel(params: KeyboardParams) = when (params.mId.mElementId) {
             KeyboardId.ELEMENT_SYMBOLS_SHIFTED -> params.mLocaleKeyboardInfos.labelSymbol
-            KeyboardId.ELEMENT_SYMBOLS -> params.mLocaleKeyboardInfos.getShiftSymbolLabel(Settings.getInstance().isTablet)
+            KeyboardId.ELEMENT_SYMBOLS -> params.mLocaleKeyboardInfos.getShiftSymbolLabel(
+                Settings.getInstance().isTablet)
             KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED, KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY_SHIFTED}"
             KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED, KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY_LOCKED}"
 
@@ -121,7 +122,7 @@ sealed interface KeyData : AbstractKeyData {
                 keys.add("!icon/clipboard_normal_key|!code/key_clipboard")
             if (!params.mId.mEmojiKeyEnabled && !params.mId.isNumberLayout)
                 keys.add("!icon/emoji_normal_key|!code/key_emoji")
-            if (!params.mId.mLanguageSwitchKeyEnabled && !params.mId.isNumberLayout && RichInputMethodManager.canSwitchLanguage())
+            if (!params.mId.mLanguageSwitchKeyEnabled && !params.mId.isNumberLayout && _root_ide_package_.org.oscar.kb.latin.RichInputMethodManager.canSwitchLanguage())
                 keys.add("!icon/language_switch_key|!code/key_language_switch")
             if (!params.mId.mOneHandedModeEnabled)
                 keys.add("!icon/start_onehanded_mode_key|!code/key_start_onehanded")

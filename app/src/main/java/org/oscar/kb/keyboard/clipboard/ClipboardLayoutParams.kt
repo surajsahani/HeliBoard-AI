@@ -5,6 +5,7 @@ package org.oscar.kb.keyboard.clipboard
 import android.content.res.Resources
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import org.oscar.kb.R
 import org.oscar.kb.keyboard.internal.KeyboardParams
@@ -36,7 +37,8 @@ class ClipboardLayoutParams(res: Resources) {
         }
         val bottomPadding = (res.getFraction(R.fraction.config_keyboard_bottom_padding_holo,
                 defaultKeyboardHeight, defaultKeyboardHeight) * sv.mBottomPaddingScale).toInt()
-        val topPadding = res.getFraction(R.fraction.config_keyboard_top_padding_holo,
+        val topPadding = res.getFraction(
+            R.fraction.config_keyboard_top_padding_holo,
                 defaultKeyboardHeight, defaultKeyboardHeight).toInt()
 
         val rowCount = KeyboardParams.DEFAULT_KEYBOARD_ROWS + if (sv.mShowsNumberRow) 1 else 0
