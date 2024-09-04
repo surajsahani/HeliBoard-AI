@@ -1,7 +1,11 @@
-package org.samyarth.oskey.latin.suggestions;
+package org.oscar.kb.latin.suggestions;
+
+
+import static org.oscar.kb.latin.utils.ToolbarUtilsKt.createToolbarKey;
+import static org.oscar.kb.latin.utils.ToolbarUtilsKt.getCodeForToolbarKey;
+import static org.oscar.kb.latin.utils.ToolbarUtilsKt.getCodeForToolbarKeyLongClick;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -9,27 +13,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.inputmethodservice.KeyboardView;
-import android.os.Build;
-import android.os.Bundle;
-import android.speech.RecognitionListener;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.os.Build;
+import android.os.Bundle;
+import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,8 +39,6 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,38 +46,39 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.samyarth.oskey.AIEngine.AIOutputEvent;
-import org.samyarth.oskey.accessibility.OnTextUpdatedListener;
-import org.samyarth.oskey.accessibility.SummarizeViewModel;
-import org.samyarth.oskey.accessibility.SummarizeViewModelFactory;
-import org.samyarth.oskey.accessibility.TextUpdatedEvent;
-import org.samyarth.oskey.R;
-import org.samyarth.oskey.accessibility.AccessibilityUtils;
-import org.samyarth.oskey.gemini.GeminiClient;
-import org.samyarth.oskey.keyboard.Key;
-import org.samyarth.oskey.keyboard.Keyboard;
-import org.samyarth.oskey.keyboard.KeyboardActionListener;
-import org.samyarth.oskey.keyboard.KeyboardSwitcher;
-import org.samyarth.oskey.keyboard.MainKeyboardView;
-import org.samyarth.oskey.keyboard.PopupKeysPanel;
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyCode;
-import org.samyarth.oskey.latin.AudioAndHapticFeedbackManager;
-import org.samyarth.oskey.latin.Dictionary;
-import org.samyarth.oskey.latin.LatinIME;
-import org.samyarth.oskey.latin.RichInputConnection;
-import org.samyarth.oskey.latin.SuggestedWords;
-import org.samyarth.oskey.latin.SuggestedWords.SuggestedWordInfo;
-import org.samyarth.oskey.latin.common.ColorType;
-import org.samyarth.oskey.latin.common.Colors;
-import org.samyarth.oskey.latin.common.Constants;
-import org.samyarth.oskey.latin.define.DebugFlags;
-import org.samyarth.oskey.latin.settings.DebugSettings;
-import org.samyarth.oskey.latin.settings.Settings;
-import org.samyarth.oskey.latin.settings.SettingsValues;
-import org.samyarth.oskey.latin.suggestions.PopupSuggestionsView.MoreSuggestionsListener;
-import org.samyarth.oskey.latin.utils.DeviceProtectedUtils;
-import org.samyarth.oskey.latin.utils.Log;
-import org.samyarth.oskey.latin.utils.ToolbarKey;
+import org.oscar.kb.AIEngine.AIOutputEvent;
+import org.oscar.kb.AIEngine.OnTextUpdatedListener;
+import org.oscar.kb.AIEngine.SummarizeViewModel;
+import org.oscar.kb.AIEngine.SummarizeViewModelFactory;
+import org.oscar.kb.AIEngine.TextUpdatedEvent;
+import org.oscar.kb.R;
+import org.oscar.kb.accessibility.AccessibilityUtils;
+import org.oscar.kb.gemini.GeminiClient;
+import org.oscar.kb.keyboard.Key;
+import org.oscar.kb.keyboard.Keyboard;
+import org.oscar.kb.keyboard.KeyboardActionListener;
+import org.oscar.kb.keyboard.KeyboardSwitcher;
+import org.oscar.kb.keyboard.MainKeyboardView;
+import org.oscar.kb.keyboard.PopupKeysPanel;
+import org.oscar.kb.keyboard.internal.KeyboardIconsSet;
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode;
+import org.oscar.kb.latin.AudioAndHapticFeedbackManager;
+import org.oscar.kb.latin.Dictionary;
+import org.oscar.kb.latin.LatinIME;
+import org.oscar.kb.latin.RichInputConnection;
+import org.oscar.kb.latin.SuggestedWords;
+import org.oscar.kb.latin.SuggestedWords.SuggestedWordInfo;
+import org.oscar.kb.latin.common.ColorType;
+import org.oscar.kb.latin.common.Colors;
+import org.oscar.kb.latin.common.Constants;
+import org.oscar.kb.latin.define.DebugFlags;
+import org.oscar.kb.latin.settings.DebugSettings;
+import org.oscar.kb.latin.settings.Settings;
+import org.oscar.kb.latin.settings.SettingsValues;
+import org.oscar.kb.latin.suggestions.PopupSuggestionsView.MoreSuggestionsListener;
+import org.oscar.kb.latin.utils.DeviceProtectedUtils;
+import org.oscar.kb.latin.utils.Log;
+import org.oscar.kb.latin.utils.ToolbarKey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,27 +87,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import kotlinx.coroutines.Dispatchers;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.ai.client.generativeai.GenerativeModel;
-import com.oscar.aikeyboard.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.samyarth.oskey.latin.suggestions.SummarizeTextProvider;
-import org.samyarth.oskey.latin.utils.ToolbarUtilsKt;
+import org.oscar.kb.latin.utils.ToolbarUtilsKt;
+
 
 public final class SuggestionStripView extends RelativeLayout implements OnClickListener,
         OnLongClickListener, SummarizeTextProvider, RecognitionListener, OnTextUpdatedListener {
 
     LatinIME mLatinIME;
-    private FirebaseCrashlytics crashlytics;
 
     private Key mCurrenteKey;
 
@@ -136,7 +128,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         aiOutput.setText(event.getText());
         //log received text
         Log.d("SuggestionStripView", "onTextUpdated: " + event.getText());
-          // Copy the text to clipboard
+        // Copy the text to clipboard
 //        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
 //        ClipData clip = ClipData.newPlainText("aiOutput", aiOutput.getText().toString());
 //        clipboard.setPrimaryClip(clip);
@@ -193,11 +185,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     @Override
     public void onError(int error) {
         speechRecognizer.cancel();
-        if (error == 7 || (error == 5 && !manualStopRecord)) {
-            //comment.text = this.getString(R.string.error_7)
-            startRecord();
-        } else {
-            Toast.makeText(getContext(), "Error in speech recognition", Toast.LENGTH_SHORT).show();
 
         switch (error) {
             case SpeechRecognizer.ERROR_AUDIO:
@@ -231,7 +218,12 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 Log.e("RecognitionListener", "Didn't understand, please try again.");
                 break;
         }
-        Log.e("RecognitionListener", "onError $error");
+//        if (error == 9 || (error == 5 && !manualStopRecord)) {
+//            startRecord();
+//        } else {
+//            Toast.makeText(getContext(), "Error in speech recognition", Toast.LENGTH_SHORT).show();
+//        }
+//        Log.e("RecognitionListener", "onError" + error);
     }
 
 
@@ -282,36 +274,13 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             ClipData clip = ClipData.newPlainText("aiOutput", aiOutput.getText().toString());
             clipboard.setPrimaryClip(clip);
             mListener.onCodeInput(KeyCode.CLIPBOARD_PASTE, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
-
-
         });
 
-        viewModel.setOnTextUpdatedListener(new OnTextUpdatedListener() {
-            @Override
-            public void onTextUpdated(@NonNull String updatedText) {
-                aiOutput.setText(updatedText);
-
-                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("aiOutput", updatedText);
-                clipboard.setPrimaryClip(clip);
-                mListener.onCodeInput(KeyCode.CLIPBOARD_PASTE, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
-                AIOutputEvent event = new AIOutputEvent(updatedText);
-                EventBus.getDefault().post(event);
-            }
-        });
-
-        AIOutputEvent event = new AIOutputEvent(aiOutput.getText().toString());
+        AIOutputEvent event = new AIOutputEvent(allOutputText);
         EventBus.getDefault().post(event);
 
     }
 
-//    public void setOutputText(String outputText) {
-//        //clear aiOutput text first
-//        aiOutput.setText("");
-//        //set new text
-//        aiOutput.setText(outputText);
-//        Log.d(TAG, "setOutputText" + outputText);
-//    }
     @Override
     public void onPartialResults(Bundle partialResults) {
 
@@ -323,8 +292,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     }
 
     StringBuilder outputBuilder = new StringBuilder();
-
-
 
     @Override
     public void onTextUpdated(@NonNull String text) {
@@ -341,12 +308,9 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 //        this.summarizeTextProvider = summarizeTextProvider;
 //    }
 
-
     public interface Listener {
         void pickSuggestionManually(SuggestedWordInfo word);
-
         void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
-
         void removeSuggestion(final String word);
     }
 
@@ -464,8 +428,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         ivCopy = findViewById(R.id.ic_copy);
         lvTextProgress = findViewById(R.id.lvTextProgress);
         tvAudioProgress = findViewById(R.id.tvAudioProgress);
-        crashlytics = FirebaseCrashlytics.getInstance();
-        FirebaseApp.initializeApp(context);
+
 
         for (int pos = 0; pos < SuggestedWords.MAX_SUGGESTIONS; pos++) {
             final TextView word = new TextView(context, null, R.attr.suggestionWordStyle);
@@ -537,7 +500,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
 
         colors.setBackground(this, ColorType.STRIP_BACKGROUND);
-        keyboardAttr.recycle();
+        //keyboardAttr.recycle();
 
         mIvOscar.setImageDrawable(getResources().getDrawable(R.drawable.ic_oscar_main));
         mIvOscar.setOnClickListener(this);
@@ -580,7 +543,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final int layoutDirection;
         if (!Settings.getInstance().getCurrent().mVarToolbarDirection)
             layoutDirection = View.LAYOUT_DIRECTION_LOCALE;
-        else {
+        else{
             layoutDirection = isRtlLanguage ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR;
             mRtl = isRtlLanguage ? -1 : 1;
         }
@@ -634,7 +597,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         for (final View debugInfoView : mDebugInfoViews) {
             final ViewParent parent = debugInfoView.getParent();
             if (parent instanceof ViewGroup) {
-                ((ViewGroup) parent).removeView(debugInfoView);
+                ((ViewGroup)parent).removeView(debugInfoView);
             }
         }
     }
@@ -693,7 +656,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     private void onLongClickToolKey(final View view) {
         if (!(view.getTag() instanceof ToolbarKey tag)) return;
         if (view.getParent() == mPinnedKeys || !Settings.getInstance().getCurrent().mQuickPinToolbarKeys) {
-            final int longClickCode = org.samyarth.oskey.latin.utils.ToolbarUtilsKt.getCodeForToolbarKeyLongClick(tag);
+            final int longClickCode = getCodeForToolbarKeyLongClick(tag);
             if (longClickCode != KeyCode.UNSPECIFIED) {
                 mListener.onCodeInput(longClickCode, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
             }
@@ -711,8 +674,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    // no need for View#performClick, we return false mostly anyway
+    @SuppressLint("ClickableViewAccessibility") // no need for View#performClick, we return false mostly anyway
     private boolean onLongClickSuggestion(final TextView wordView) {
         boolean showIcon = true;
         if (wordView.getTag() instanceof Integer) {
@@ -729,7 +691,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             wordView.setEllipsize(TextUtils.TruncateAt.END);
             AtomicBoolean downOk = new AtomicBoolean(false);
             wordView.setOnTouchListener((view1, motionEvent) -> {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && downOk.get()) {
                     final float x = motionEvent.getX();
                     final float y = motionEvent.getY();
                     if (0 < x && x < w && 0 < y && y < h) {
@@ -776,7 +738,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mMoreSuggestionsView.dismissPopupKeysPanel();
         // show suggestions, but without the removed word
         final ArrayList<SuggestedWordInfo> sw = new ArrayList<>();
-        for (int i = 0; i < mSuggestedWords.size(); i++) {
+        for (int i = 0; i < mSuggestedWords.size(); i ++) {
             final SuggestedWordInfo info = mSuggestedWords.getInfo(i);
             if (!info.getWord().equals(word))
                 sw.add(info);
@@ -784,7 +746,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         ArrayList<SuggestedWordInfo> rs = null;
         if (mSuggestedWords.mRawSuggestions != null) {
             rs = mSuggestedWords.mRawSuggestions;
-            for (int i = 0; i < rs.size(); i++) {
+            for (int i = 0; i < rs.size(); i ++) {
                 if (rs.get(i).getWord().equals(word)) {
                     rs.remove(i);
                     break;
@@ -801,7 +763,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 getContext(), mSuggestedWords, mSuggestionsStrip, SuggestionStripView.this);
         mStripVisibilityGroup.showSuggestionsStrip();
         // Show the toolbar if no suggestions are left and the "Auto show toolbar" setting is enabled
-        if (mSuggestedWords.isEmpty() && Settings.getInstance().getCurrent().mAutoShowToolbar) {
+        if (mSuggestedWords.isEmpty() && Settings.getInstance().getCurrent().mAutoShowToolbar){
             setToolbarVisibility(true);
         }
     }
@@ -820,7 +782,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final int maxWidth = stripWidth - container.getPaddingLeft() - container.getPaddingRight();
         final MoreSuggestions.Builder builder = mMoreSuggestionsBuilder;
         builder.layout(mSuggestedWords, mStartIndexOfMoreSuggestions, maxWidth,
-                (int) (maxWidth * layoutHelper.mMinMoreSuggestionsWidth),
+                (int)(maxWidth * layoutHelper.mMinMoreSuggestionsWidth),
                 layoutHelper.getMaxMoreSuggestionsRow(), parentKeyboard);
         mMoreSuggestionsView.setKeyboard(builder.build());
         container.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -864,14 +826,14 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     public boolean onInterceptTouchEvent(final MotionEvent me) {
 
         // Disable More Suggestions if inline autofill suggestions is visible
-        if (isExternalSuggestionVisible) {
+        if(isExternalSuggestionVisible) {
             return false;
         }
 
         // Detecting sliding up finger to show {@link MoreSuggestionsView}.
         if (!mMoreSuggestionsView.isShowingInParent()) {
-            mLastX = (int) me.getX();
-            mLastY = (int) me.getY();
+            mLastX = (int)me.getX();
+            mLastY = (int)me.getY();
             return mMoreSuggestionsSlidingDetector.onTouchEvent(me);
         }
         if (mMoreSuggestionsView.isInModalMode()) {
@@ -880,8 +842,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
         final int action = me.getAction();
         final int index = me.getActionIndex();
-        final int x = (int) me.getX(index);
-        final int y = (int) me.getY(index);
+        final int x = (int)me.getX(index);
+        final int y = (int)me.getY(index);
         if (Math.abs(x - mOriginX) >= mMoreSuggestionsModalTolerance
                 || mOriginY - y >= mMoreSuggestionsModalTolerance) {
             // Decided to be in the sliding suggestion mode only when the touch point has been moved
@@ -917,8 +879,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         // In the sliding input mode. {@link MotionEvent} should be forwarded to
         // {@link MoreSuggestionsView}.
         final int index = me.getActionIndex();
-        final int x = mMoreSuggestionsView.translateX((int) me.getX(index));
-        final int y = mMoreSuggestionsView.translateY((int) me.getY(index));
+        final int x = mMoreSuggestionsView.translateX((int)me.getX(index));
+        final int y = mMoreSuggestionsView.translateY((int)me.getY(index));
         me.setLocation(x, y);
         if (!mNeedsToTransformTouchEventToHoverEvent) {
             mMoreSuggestionsView.onTouchEvent(me);
@@ -956,40 +918,36 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     }
     @Override
     public void onClick(final View view) {
-            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(KeyCode.NOT_SPECIFIED, this);
-            final Object tag = view.getTag();
-        try {
-            if (view == mIvOscar) {
-                Log.d(TAG, "Generating summary...");
-                Toast.makeText(getContext(), "Generating summary...", Toast.LENGTH_SHORT).show();
-                GeminiClient geminiClient = new GeminiClient();
-                GenerativeModel generativeModel = geminiClient.getGeminiFlashModel();
-                SummarizeViewModelFactory factory = new SummarizeViewModelFactory(generativeModel);
-                SummarizeViewModel viewModel = factory.create(SummarizeViewModel.class);
+        AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(KeyCode.NOT_SPECIFIED, this);
+        final Object tag = view.getTag();
 
-                //viewModel.summarizeStreaming("Pass actual text from RichInputConnection");
+        if (view == mIvOscar) {
+            Log.d(TAG, "Generating summary...");
+            Toast.makeText(getContext(), "Generating summary...", Toast.LENGTH_SHORT).show();
+            GeminiClient geminiClient = new GeminiClient();
+            GenerativeModel generativeModel = geminiClient.getGeminiFlashModel();
+            SummarizeViewModelFactory factory = new SummarizeViewModelFactory(generativeModel);
+            SummarizeViewModel viewModel = factory.create(SummarizeViewModel.class);
 
-                //CharSequence text = inputConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0)
+            //viewModel.summarizeStreaming("Pass actual text from RichInputConnection");
 
-
-                mLatinIME = new LatinIME();
-
-                RichInputConnection inputConnection = new RichInputConnection(mLatinIME);
-                CharSequence text = inputConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0);
-
-                if (text != null) {
-                    Log.d(TAG, "Text before cursor: " + text);
-                    viewModel.summarizeStreaming(text.toString());
-                } else {
-                    Log.d(TAG, "Text before cursor is null");
-                }
+            //CharSequence text = inputConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0)
 
 
-                return;
+            mLatinIME = new LatinIME();
+
+            RichInputConnection inputConnection = new RichInputConnection(mLatinIME);
+            CharSequence text = inputConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0);
+
+            if (text != null) {
+                Log.d(TAG, "Text before cursor: " + text);
+                viewModel.summarizeStreaming(text.toString());
+            } else {
+                Log.d(TAG, "Text before cursor is null");
             }
-        }catch (Exception e){
-            Log.d(TAG, "Error in generating summary: " + e.getMessage());
-            crashlytics.recordException(e);
+
+
+            return;
         }
         if (view == tvAudioProgress) {
 //            permissionCheck();
@@ -997,11 +955,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 manualStopRecord = true;
                 stopRecord();
             }else if (isInternetAvailable()) {
-                    manualStopRecord = false;
-                    startRecord();
-                    aiOutput.setText("");
-                } else {
-                    Toast.makeText(this.getContext(), "Oops! Internet connection lost.", Toast.LENGTH_SHORT).show();
+                manualStopRecord = false;
+                startRecord();
+                aiOutput.setText("");
+            } else {
+                Toast.makeText(this.getContext(), "Oops! Internet connection lost.", Toast.LENGTH_SHORT).show();
             }
 //            else {
 //                manualStopRecord = false;
@@ -1009,15 +967,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 //                aiOutput.setText("");
 
             return;
-        }try {
-            if (view == aiOutput) {
-                // On Click sent to Keyboard
-                mListener.onCodeInput(KeyCode.CLIPBOARD_PASTE, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
-                return;
-            }
-        }catch (Exception e){
-            Log.d(TAG, "Error in generating summary: " + e.getMessage());
-            crashlytics.recordException(e);
+        }
+        if(view ==aiOutput){
+            // On Click sent to Keyboard
+            mListener.onCodeInput(KeyCode.CLIPBOARD_PASTE, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
+            return;
         }
 
         if(view == ivDelete){
@@ -1043,7 +997,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             }
         }
         if (tag instanceof ToolbarKey) {
-            final int code = org.samyarth.oskey.latin.utils.ToolbarUtilsKt.getCodeForToolbarKey((ToolbarKey) tag);
+            final int code = getCodeForToolbarKey((ToolbarKey) tag);
             if (code != KeyCode.UNSPECIFIED) {
                 Log.d(TAG, "click toolbar key " + tag);
                 mListener.onCodeInput(code, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false);
@@ -1079,43 +1033,32 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
 
     private void stopRecord() {
-        try {
-            tvAudioProgress.pauseAnimation();
-            Toast.makeText(getContext(), "Recording stopped", Toast.LENGTH_SHORT).show();
-            //ivOscarVoiceInput.setImageDrawable(getResources().getDrawable(R.drawable.baseline_mic_off_24));
-            recordStatus = false;
-            speechRecognizer.stopListening();
-        } catch (Exception e) {
-            Log.d(TAG, "Error in starting record: " + e.getMessage());
-            crashlytics.recordException(e);
-        }
+        tvAudioProgress.pauseAnimation();
+        Toast.makeText(getContext(), "Recording stopped", Toast.LENGTH_SHORT).show();
+        //ivOscarVoiceInput.setImageDrawable(getResources().getDrawable(R.drawable.baseline_mic_off_24));
+        recordStatus = false;
+        speechRecognizer.stopListening();
     }
 
 
-
     private void startRecord() {
-        try {
-            tvAudioProgress.playAnimation();
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
-            speechRecognizer.setRecognitionListener(this);
-            Log.d(TAG, "Recording started");
+        tvAudioProgress.playAnimation();
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
+        speechRecognizer.setRecognitionListener(this);
+        Log.d(TAG, "Recording started");
 
-            Toast.makeText(getContext(), "Recording started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Recording started", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.US);
-            intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 30000);
-            speechRecognizer.startListening(intent);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.US);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 30000);
+        speechRecognizer.startListening(intent);
 
-            //ivOscarVoiceInput.setImageDrawable(getResources().getDrawable(R.drawable.sym_keyboard_voice_holo));
+        //ivOscarVoiceInput.setImageDrawable(getResources().getDrawable(R.drawable.sym_keyboard_voice_holo));
 
-            recordStatus = true;
-        }catch (Exception e){
-            Log.d(TAG, "Error in starting record: " + e.getMessage());
-                crashlytics.recordException(e);
-        }
+        recordStatus = true;
 
     }
 

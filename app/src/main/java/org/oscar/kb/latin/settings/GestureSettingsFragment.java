@@ -4,16 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
 
-package org.samyarth.oskey.latin.settings;
+package org.oscar.kb.latin.settings;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.oscar.aikeyboard.R;
+import androidx.preference.SwitchPreference;
 
-import helium314.keyboard.keyboard.KeyboardSwitcher;
-import helium314.keyboard.latin.R;
+import org.oscar.kb.R;
+
+import org.oscar.kb.keyboard.KeyboardSwitcher;
+import org.oscar.kb.R;
 
 /**
  * "Gesture typing preferences" settings sub screen.
@@ -81,10 +83,10 @@ public final class GestureSettingsFragment extends SubScreenFragment {
             needsReload = true;
             return true;
         });
-        setPreferenceVisible(com.oscar.aikeyboard.latin.settings.Settings.PREF_GESTURE_PREVIEW_TRAIL, com.oscar.aikeyboard.latin.settings.Settings.readGestureInputEnabled(prefs));
-        setPreferenceVisible(com.oscar.aikeyboard.latin.settings.Settings.PREF_GESTURE_FLOATING_PREVIEW_TEXT, com.oscar.aikeyboard.latin.settings.Settings.readGestureInputEnabled(prefs));
-        setPreferenceVisible(com.oscar.aikeyboard.latin.settings.Settings.PREF_GESTURE_SPACE_AWARE, com.oscar.aikeyboard.latin.settings.Settings.readGestureInputEnabled(prefs));
-        setPreferenceVisible(com.oscar.aikeyboard.latin.settings.Settings.PREF_GESTURE_FAST_TYPING_COOLDOWN, Settings.readGestureInputEnabled(prefs));
+        setPreferenceVisible(Settings.PREF_GESTURE_PREVIEW_TRAIL, Settings.readGestureInputEnabled(prefs));
+        setPreferenceVisible(Settings.PREF_GESTURE_FLOATING_PREVIEW_TEXT, Settings.readGestureInputEnabled(prefs));
+        setPreferenceVisible(Settings.PREF_GESTURE_SPACE_AWARE, Settings.readGestureInputEnabled(prefs));
+        setPreferenceVisible(Settings.PREF_GESTURE_FAST_TYPING_COOLDOWN, Settings.readGestureInputEnabled(prefs));
     }
 
     private void setupGestureFastTypingCooldownPref() {

@@ -1,36 +1,39 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-package org.samyarth.oskey.keyboard.clipboard
+package org.oscar.kb.keyboard.clipboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import org.samyarth.oskey.keyboard.KeyboardActionListener
-import org.samyarth.oskey.keyboard.KeyboardSwitcher
-import org.samyarth.oskey.keyboard.internal.KeyDrawParams
-import org.samyarth.oskey.keyboard.internal.KeyVisualAttributes
-import org.samyarth.oskey.keyboard.internal.KeyboardIconsSet
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyCode
-import org.samyarth.oskey.latin.ClipboardHistoryManager
-import org.samyarth.oskey.R
-import org.samyarth.oskey.latin.common.ColorType
-import org.samyarth.oskey.latin.common.Constants
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.DeviceProtectedUtils
-import org.samyarth.oskey.latin.utils.ResourceUtils
-import org.samyarth.oskey.latin.utils.ToolbarKey
-import org.samyarth.oskey.latin.utils.createToolbarKey
-import org.samyarth.oskey.latin.utils.getCodeForToolbarKey
-import org.samyarth.oskey.latin.utils.getCodeForToolbarKeyLongClick
-import org.samyarth.oskey.latin.utils.getEnabledClipboardToolbarKeys
+import org.oscar.kb.keyboard.KeyboardActionListener
+import org.oscar.kb.keyboard.KeyboardSwitcher
+import org.oscar.kb.keyboard.internal.KeyDrawParams
+import org.oscar.kb.keyboard.internal.KeyVisualAttributes
+import org.oscar.kb.keyboard.internal.KeyboardIconsSet
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode
+import org.oscar.kb.latin.ClipboardHistoryManager
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.KeyboardLayoutSet
+import org.oscar.kb.keyboard.MainKeyboardView
+import org.oscar.kb.keyboard.PointerTracker
+import org.oscar.kb.latin.common.ColorType
+import org.oscar.kb.latin.common.Constants
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.DeviceProtectedUtils
+import org.oscar.kb.latin.utils.ResourceUtils
+import org.oscar.kb.latin.utils.ToolbarKey
+import org.oscar.kb.latin.utils.createToolbarKey
+import org.oscar.kb.latin.utils.getCodeForToolbarKey
+import org.oscar.kb.latin.utils.getCodeForToolbarKeyLongClick
+import org.oscar.kb.latin.utils.getEnabledClipboardToolbarKeys
 
 
 @SuppressLint("CustomViewStyleable")

@@ -1,13 +1,15 @@
-package org.samyarth.oskey.keyboard.internal
+package org.oscar.kb.keyboard.internal
 
 import android.content.Context
 import android.content.res.Resources
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
-import org.samyarth.oskey.R
-import com.oscar.aikeyboard.latin.utils.Log
-import com.oscar.aikeyboard.latin.utils.ToolbarKey
-import com.oscar.aikeyboard.latin.utils.getStyleableIconId
+import androidx.core.content.ContextCompat
+import org.oscar.kb.latin.utils.ToolbarKey
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.KeyboardTheme
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.DeviceProtectedUtils
+import org.oscar.kb.latin.utils.Log
 
 import java.util.Locale
 

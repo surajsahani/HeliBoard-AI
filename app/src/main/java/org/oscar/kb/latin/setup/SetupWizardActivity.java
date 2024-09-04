@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
 
-package com.oscar.aikeyboard.latin.setup;
+package org.oscar.kb.latin.setup;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,13 +36,13 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.oscar.aikeyboard.R;
-import com.oscar.aikeyboard.latin.settings.SettingsActivity;
-import com.oscar.aikeyboard.latin.utils.ActivityThemeUtils;
-import com.oscar.aikeyboard.latin.utils.JniUtils;
-import com.oscar.aikeyboard.latin.utils.LeakGuardHandlerWrapper;
-import com.oscar.aikeyboard.latin.utils.ResourceUtils;
-import com.oscar.aikeyboard.latin.utils.UncachedInputMethodManagerUtils;
+import org.oscar.kb.R;
+import org.oscar.kb.latin.settings.SettingsActivity;
+import org.oscar.kb.latin.utils.ActivityThemeUtils;
+import org.oscar.kb.latin.utils.JniUtils;
+import org.oscar.kb.latin.utils.LeakGuardHandlerWrapper;
+import org.oscar.kb.latin.utils.ResourceUtils;
+import org.oscar.kb.latin.utils.UncachedInputMethodManagerUtils;
 
 import java.util.ArrayList;
 

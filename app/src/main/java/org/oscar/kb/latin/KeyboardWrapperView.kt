@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-package org.samyarth.oskey.latin
+package org.oscar.kb.latin
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,14 +11,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import org.samyarth.oskey.R
-import org.samyarth.oskey.keyboard.KeyboardActionListener
-import org.samyarth.oskey.keyboard.KeyboardSwitcher
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyCode
-import org.samyarth.oskey.latin.common.ColorType
-import org.samyarth.oskey.latin.common.Constants
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.DeviceProtectedUtils
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.KeyboardActionListener
+import org.oscar.kb.keyboard.KeyboardSwitcher
+import org.oscar.kb.keyboard.internal.KeyboardIconsSet
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode
+import org.oscar.kb.latin.common.ColorType
+import org.oscar.kb.latin.common.Constants
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.DeviceProtectedUtils
 import kotlin.math.abs
 
 class KeyboardWrapperView @JvmOverloads constructor(

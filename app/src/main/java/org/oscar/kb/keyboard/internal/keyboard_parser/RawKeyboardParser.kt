@@ -1,32 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package org.samyarth.oskey.keyboard.internal.keyboard_parser
+package org.oscar.kb.keyboard.internal.keyboard_parser
 
 import android.content.Context
 import android.content.res.Configuration
-import org.samyarth.oskey.keyboard.KeyboardId
-import org.samyarth.oskey.keyboard.internal.KeyboardParams
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.AbstractKeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.AutoTextKeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.CaseSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.CharWidthSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KanaSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyboardStateSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.LayoutDirectionSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.MultiTextKeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.ShiftStateSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.TextKeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.VariationSelector
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.toTextKey
-import org.samyarth.oskey.latin.common.splitOnWhitespace
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.CUSTOM_LAYOUT_PREFIX
-import org.samyarth.oskey.latin.utils.Log
-import org.samyarth.oskey.latin.utils.ScriptUtils
-import org.samyarth.oskey.latin.utils.ScriptUtils.script
-import org.samyarth.oskey.latin.utils.getCustomFunctionalLayoutName
-import org.samyarth.oskey.latin.utils.getCustomLayoutFile
-import org.samyarth.oskey.latin.utils.getCustomLayoutFiles
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.AbstractKeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.AutoTextKeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.CaseSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.CharWidthSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KanaSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyboardStateSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.LayoutDirectionSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.MultiTextKeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.ShiftStateSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.TextKeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.VariationSelector
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.toTextKey
+import org.oscar.kb.latin.common.splitOnWhitespace
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.CUSTOM_LAYOUT_PREFIX
+import org.oscar.kb.latin.utils.Log
+import org.oscar.kb.latin.utils.ScriptUtils
+import org.oscar.kb.latin.utils.ScriptUtils.script
+import org.oscar.kb.latin.utils.getCustomFunctionalLayoutName
+import org.oscar.kb.latin.utils.getCustomLayoutFile
+import org.oscar.kb.latin.utils.getCustomLayoutFiles
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -36,9 +36,11 @@ object RawKeyboardParser {
     private const val TAG = "RawKeyboardParser"
     private val rawLayoutCache = hashMapOf<String, (KeyboardParams) -> MutableList<MutableList<KeyData>>>()
 
-    val symbolAndNumberLayouts = listOf(LAYOUT_SYMBOLS, LAYOUT_SYMBOLS_SHIFTED, LAYOUT_SYMBOLS_ARABIC,
+    val symbolAndNumberLayouts = listOf(
+        LAYOUT_SYMBOLS, LAYOUT_SYMBOLS_SHIFTED, LAYOUT_SYMBOLS_ARABIC,
         LAYOUT_NUMBER, LAYOUT_NUMPAD, LAYOUT_NUMPAD_LANDSCAPE, LAYOUT_PHONE, LAYOUT_PHONE_SYMBOLS,
-        LAYOUT_NUMBER_ROW, LAYOUT_EMOJI_BOTTOM_ROW, LAYOUT_CLIPBOARD_BOTTOM_ROW)
+        LAYOUT_NUMBER_ROW, LAYOUT_EMOJI_BOTTOM_ROW, LAYOUT_CLIPBOARD_BOTTOM_ROW
+    )
 
     fun clearCache() = rawLayoutCache.clear()
 

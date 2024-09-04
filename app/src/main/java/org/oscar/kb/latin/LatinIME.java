@@ -65,6 +65,7 @@ import org.oscar.kb.keyboard.KeyboardId;
 import org.oscar.kb.keyboard.KeyboardLayoutSet;
 import org.oscar.kb.keyboard.KeyboardSwitcher;
 import org.oscar.kb.keyboard.MainKeyboardView;
+import org.oscar.kb.keyboard.internal.KeyboardIconsSet;
 import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode;
 import org.oscar.kb.latin.common.ColorType;
 import org.oscar.kb.latin.common.Constants;

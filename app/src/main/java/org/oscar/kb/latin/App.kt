@@ -17,6 +17,8 @@ import org.oscar.kb.latin.utils.getCustomLayoutFile
 import org.oscar.kb.latin.utils.onCustomLayoutFileListChanged
 import org.oscar.kb.latin.utils.upgradeToolbarPrefs
 import org.oscar.kb.BuildConfig
+import org.oscar.kb.latin.utils.Log
+import org.oscar.kb.latin.utils.getCustomLayoutFiles
 import java.io.File
 
 class App : Application() {

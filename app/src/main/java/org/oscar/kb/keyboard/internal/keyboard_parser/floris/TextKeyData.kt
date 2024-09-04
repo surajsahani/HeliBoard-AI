@@ -3,31 +3,31 @@
  * modified
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
-package org.samyarth.oskey.keyboard.internal.keyboard_parser.floris
+package org.oscar.kb.keyboard.internal.keyboard_parser.floris
 
 import android.view.inputmethod.EditorInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import org.samyarth.oskey.keyboard.Key
-import org.samyarth.oskey.keyboard.KeyboardId
-import org.samyarth.oskey.keyboard.KeyboardTheme
-import org.samyarth.oskey.keyboard.internal.KeyboardIconsSet
-import org.samyarth.oskey.keyboard.internal.KeyboardParams
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyCode.checkAndConvertCode
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyLabel.convertFlorisLabel
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyLabel.rtlLabel
-import org.samyarth.oskey.latin.RichInputMethodManager
-import org.samyarth.oskey.latin.common.Constants
-import org.samyarth.oskey.latin.common.LocaleUtils.constructLocale
-import org.samyarth.oskey.latin.common.StringUtils
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.spellcheck.AndroidSpellCheckerService
-import org.samyarth.oskey.latin.utils.InputTypeUtils
-import org.samyarth.oskey.latin.utils.Log
-import org.samyarth.oskey.latin.utils.ToolbarKey
-import org.samyarth.oskey.latin.utils.getCodeForToolbarKey
-import org.samyarth.oskey.latin.utils.toolbarKeyStrings
+import org.oscar.kb.keyboard.Key
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.KeyboardTheme
+import org.oscar.kb.keyboard.internal.KeyboardIconsSet
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode.checkAndConvertCode
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyLabel.convertFlorisLabel
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyLabel.rtlLabel
+import org.oscar.kb.latin.RichInputMethodManager
+import org.oscar.kb.latin.common.Constants
+import org.oscar.kb.latin.common.LocaleUtils.constructLocale
+import org.oscar.kb.latin.common.StringUtils
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.spellcheck.AndroidSpellCheckerService
+import org.oscar.kb.latin.utils.InputTypeUtils
+import org.oscar.kb.latin.utils.Log
+import org.oscar.kb.latin.utils.ToolbarKey
+import org.oscar.kb.latin.utils.getCodeForToolbarKey
+import org.oscar.kb.latin.utils.toolbarKeyStrings
 import java.util.Locale
 
 // taken from FlorisBoard, small modifications (see also KeyData)

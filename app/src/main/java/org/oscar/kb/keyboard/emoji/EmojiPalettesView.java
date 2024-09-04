@@ -23,6 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.oscar.kb.keyboard.Keyboard;
+import org.oscar.kb.keyboard.KeyboardId;
+import org.oscar.kb.keyboard.MainKeyboardView;
+import org.oscar.kb.keyboard.PointerTracker;
 import org.oscar.kb.keyboard.internal.KeyDrawParams;
 import org.oscar.kb.keyboard.internal.KeyVisualAttributes;
 import org.oscar.kb.keyboard.internal.KeyboardIconsSet;

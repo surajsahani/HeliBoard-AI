@@ -1,27 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package org.samyarth.oskey.keyboard.internal.keyboard_parser
+package org.oscar.kb.keyboard.internal.keyboard_parser
 
 import android.content.Context
 import android.content.res.Configuration
-import org.samyarth.oskey.latin.utils.Log
-import org.samyarth.oskey.keyboard.Key
-import org.samyarth.oskey.keyboard.Key.KeyParams
-import org.samyarth.oskey.keyboard.KeyboardId
-import org.samyarth.oskey.keyboard.internal.KeyboardParams
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyLabel
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyType
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.TextKeyData
-import org.samyarth.oskey.latin.common.isEmoji
-import org.samyarth.oskey.latin.define.DebugFlags
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.POPUP_KEYS_LAYOUT
-import org.samyarth.oskey.latin.utils.POPUP_KEYS_NUMBER
-import org.samyarth.oskey.latin.utils.ScriptUtils
-import org.samyarth.oskey.latin.utils.ScriptUtils.script
-import org.samyarth.oskey.latin.utils.replaceFirst
-import org.samyarth.oskey.latin.utils.splitAt
-import org.samyarth.oskey.latin.utils.sumOf
+import org.oscar.kb.latin.utils.Log
+import org.oscar.kb.keyboard.Key
+import org.oscar.kb.keyboard.Key.KeyParams
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyLabel
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyType
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.TextKeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.RawKeyboardParser
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.SimplePopups
+import org.oscar.kb.latin.common.isEmoji
+import org.oscar.kb.latin.define.DebugFlags
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.POPUP_KEYS_LAYOUT
+import org.oscar.kb.latin.utils.POPUP_KEYS_NUMBER
+import org.oscar.kb.latin.utils.ScriptUtils
+import org.oscar.kb.latin.utils.ScriptUtils.script
+import org.oscar.kb.latin.utils.replaceFirst
+import org.oscar.kb.latin.utils.splitAt
+import org.oscar.kb.latin.utils.sumOf
+import kotlin.math.roundToInt
 
 /**
  * Abstract parser class that handles creation of keyboard from [KeyData] arranged in rows,

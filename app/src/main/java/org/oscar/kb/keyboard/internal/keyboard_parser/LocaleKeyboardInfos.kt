@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package org.samyarth.oskey.keyboard.internal.keyboard_parser
+package org.oscar.kb.keyboard.internal.keyboard_parser
 
 import android.content.Context
-import org.samyarth.oskey.keyboard.Key
-import org.samyarth.oskey.keyboard.KeyboardId
-import org.samyarth.oskey.keyboard.internal.KeyboardParams
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.KeyData
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.floris.toTextKey
-import org.samyarth.oskey.latin.common.splitOnFirstSpacesOnly
-import org.samyarth.oskey.latin.common.splitOnWhitespace
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.SubtypeLocaleUtils
+import org.oscar.kb.keyboard.Key
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyData
+import org.oscar.kb.keyboard.internal.keyboard_parser.floris.toTextKey
+import org.oscar.kb.latin.common.splitOnFirstSpacesOnly
+import org.oscar.kb.latin.common.splitOnWhitespace
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.SubtypeLocaleUtils
 import java.io.InputStream
 import java.util.Locale
 

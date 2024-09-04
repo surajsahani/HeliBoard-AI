@@ -9,6 +9,7 @@ package org.oscar.kb.keyboard.internal;
 import android.text.TextUtils;
 
 import org.oscar.kb.keyboard.internal.keyboard_parser.floris.KeyCode;
+import org.oscar.kb.latin.define.DebugFlags;
 import org.oscar.kb.latin.utils.Log;
 
 import androidx.annotation.NonNull;

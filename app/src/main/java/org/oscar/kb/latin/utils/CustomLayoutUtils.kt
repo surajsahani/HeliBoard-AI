@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package org.samyarth.oskey.latin.utils
+package org.oscar.kb.latin.utils
 
 import android.content.Context
 import android.net.Uri
@@ -9,19 +9,17 @@ import android.view.inputmethod.InputMethodSubtype
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import org.samyarth.oskey.R
-import org.samyarth.oskey.keyboard.Key
-import org.samyarth.oskey.keyboard.KeyboardId
-import org.samyarth.oskey.keyboard.KeyboardLayoutSet
-import org.samyarth.oskey.keyboard.KeyboardSwitcher
-import org.samyarth.oskey.keyboard.internal.KeyboardParams
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.POPUP_KEYS_NORMAL
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.RawKeyboardParser
-import org.samyarth.oskey.keyboard.internal.keyboard_parser.addLocaleKeyTextsToParams
-import org.samyarth.oskey.latin.common.Constants
-import org.samyarth.oskey.latin.common.FileUtils
-import org.samyarth.oskey.latin.utils.DeviceProtectedUtils
-import org.samyarth.oskey.latin.utils.ResourceUtils
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.Key
+import org.oscar.kb.keyboard.KeyboardId
+import org.oscar.kb.keyboard.KeyboardLayoutSet
+import org.oscar.kb.keyboard.KeyboardSwitcher
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.keyboard.internal.keyboard_parser.POPUP_KEYS_NORMAL
+import org.oscar.kb.keyboard.internal.keyboard_parser.RawKeyboardParser
+import org.oscar.kb.keyboard.internal.keyboard_parser.addLocaleKeyTextsToParams
+import org.oscar.kb.latin.common.Constants
+import org.oscar.kb.latin.common.FileUtils
 import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.IOException
@@ -239,14 +237,20 @@ fun getCustomFunctionalLayoutName(elementId: Int, subtype: InputMethodSubtype, c
     val mainLayoutName = subtype.getExtraValueOf(Constants.Subtype.ExtraValue.KEYBOARD_LAYOUT_SET) ?: "qwerty"
 
     if (elementId == KeyboardId.ELEMENT_SYMBOLS_SHIFTED) {
-        findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(CUSTOM_FUNCTIONAL_LAYOUT_SYMBOLS_SHIFTED) }, mainLayoutName, languageTag)
+        findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(
+            CUSTOM_FUNCTIONAL_LAYOUT_SYMBOLS_SHIFTED
+        ) }, mainLayoutName, languageTag)
             ?.let { return it }
     }
     if (elementId == KeyboardId.ELEMENT_SYMBOLS) {
-        findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(CUSTOM_FUNCTIONAL_LAYOUT_SYMBOLS) }, mainLayoutName, languageTag)
+        findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(
+            CUSTOM_FUNCTIONAL_LAYOUT_SYMBOLS
+        ) }, mainLayoutName, languageTag)
             ?.let { return it }
     }
-    return findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(CUSTOM_FUNCTIONAL_LAYOUT_NORMAL) }, mainLayoutName, languageTag)
+    return findMatchingLayout(customFunctionalLayoutNames.filter { it.startsWith(
+        CUSTOM_FUNCTIONAL_LAYOUT_NORMAL
+    ) }, mainLayoutName, languageTag)
 }
 
 // todo (when adding custom layouts per locale or main layout): adjust mainLayoutName for custom layouts?

@@ -1,4 +1,4 @@
-package org.samyarth.oskey.latin.setup
+package org.oscar.kb.latin.setup
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -27,21 +27,23 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.navigation.NavigationView
-import org.samyarth.oskey.accessibility.OutputTextListener
-import org.samyarth.oskey.accessibility.SharedViewModel
-import org.samyarth.oskey.accessibility.SummarizeUiState
-import org.samyarth.oskey.accessibility.SummarizeViewModel
-import org.samyarth.oskey.accessibility.SummarizeViewModelFactory
-import org.samyarth.oskey.BuildConfig
-import org.samyarth.oskey.gemini.GeminiClient
-import org.samyarth.oskey.latin.suggestions.SuggestionStripView
-import org.samyarth.oskey.latin.suggestions.SummarizeTextProvider
-import org.samyarth.oskey.latin.utils.Log
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.oscar.kb.AIEngine.OutputTextListener
+import org.oscar.kb.AIEngine.SharedViewModel
+import org.oscar.kb.AIEngine.SummarizeUiState
+import org.oscar.kb.AIEngine.SummarizeViewModel
+import org.oscar.kb.AIEngine.SummarizeViewModelFactory
+import org.oscar.kb.BuildConfig
+import org.oscar.kb.gemini.GeminiClient
+import org.oscar.kb.latin.suggestions.SuggestionStripView
+import org.oscar.kb.latin.suggestions.SummarizeTextProvider
+import org.oscar.kb.latin.utils.Log
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.samyarth.oskey.R
+import org.oscar.kb.R
 
 class KeyboardselectionActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener, SummarizeTextProvider, OutputTextListener {

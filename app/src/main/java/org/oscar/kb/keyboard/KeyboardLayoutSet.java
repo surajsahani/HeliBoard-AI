@@ -25,9 +25,12 @@ import org.oscar.kb.keyboard.internal.UniqueKeysCache;
 import org.oscar.kb.keyboard.internal.keyboard_parser.LocaleKeyboardInfos;
 import org.oscar.kb.keyboard.internal.keyboard_parser.LocaleKeyboardInfosKt;
 import org.oscar.kb.keyboard.internal.keyboard_parser.RawKeyboardParser;
+import org.oscar.kb.latin.RichInputMethodManager;
 import org.oscar.kb.latin.RichInputMethodSubtype;
+import org.oscar.kb.latin.settings.Settings;
 import org.oscar.kb.latin.utils.InputTypeUtils;
 import org.oscar.kb.latin.utils.Log;
+import org.oscar.kb.latin.utils.ResourceUtils;
 import org.oscar.kb.latin.utils.ScriptUtils;
 
 /**
@@ -132,7 +135,7 @@ public final class KeyboardLayoutSet {
         // specified as an elementKeyboard attribute in the file.
         // The KeyboardId is an internal key for a Keyboard object.
 
-        final com.oscar.aikeyboard.keyboard.KeyboardId id = new com.oscar.aikeyboard.keyboard.KeyboardId(keyboardLayoutSetElementId, mParams);
+        final KeyboardId id = new KeyboardId(keyboardLayoutSetElementId, mParams);
         try {
             return getKeyboard(id);
         } catch (final RuntimeException e) {

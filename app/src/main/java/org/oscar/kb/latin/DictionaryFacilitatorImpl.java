@@ -4,42 +4,42 @@
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
 
-package org.samyarth.oskey.latin;
+package org.oscar.kb.latin;
 
 import android.Manifest;
 import android.content.Context;
 import android.provider.UserDictionary;
 import android.text.TextUtils;
 
-import org.samyarth.oskey.latin.settings.SettingsValues;
-import org.samyarth.oskey.latin.utils.DeviceProtectedUtils;
+import org.oscar.kb.latin.settings.SettingsValues;
+import org.oscar.kb.latin.utils.DeviceProtectedUtils;
 
-import org.samyarth.oskey.latin.DictionaryFactoryKt;
-import org.samyarth.oskey.latin.utils.Log;
+import org.oscar.kb.latin.DictionaryFactoryKt;
+import org.oscar.kb.latin.utils.Log;
 
-import com.oscar.aikeyboard.latin.common.StringUtilsKt;
-import com.oscar.aikeyboard.latin.settings.SettingsValues;
-import com.oscar.aikeyboard.latin.utils.DeviceProtectedUtils;
-import com.oscar.aikeyboard.latin.utils.Log;
+import org.oscar.kb.latin.common.StringUtilsKt;
+import org.oscar.kb.latin.settings.SettingsValues;
+import org.oscar.kb.latin.utils.DeviceProtectedUtils;
+import org.oscar.kb.latin.utils.Log;
 import android.util.LruCache;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.samyarth.oskey.keyboard.Keyboard;
-import org.samyarth.oskey.latin.NgramContext.WordInfo;
-import org.samyarth.oskey.latin.SuggestedWords.SuggestedWordInfo;
-import org.samyarth.oskey.latin.common.ComposedData;
-import org.samyarth.oskey.latin.common.Constants;
-import org.samyarth.oskey.latin.common.StringUtils;
-import org.samyarth.oskey.latin.permissions.PermissionsUtil;
-import org.samyarth.oskey.latin.personalization.UserHistoryDictionary;
-import org.samyarth.oskey.latin.settings.Settings;
-import org.samyarth.oskey.latin.settings.SettingsValuesForSuggestion;
-import org.samyarth.oskey.latin.utils.ExecutorUtils;
-import org.samyarth.oskey.latin.utils.SuggestionResults;
+import org.oscar.kb.keyboard.Keyboard;
+import org.oscar.kb.latin.NgramContext.WordInfo;
+import org.oscar.kb.latin.SuggestedWords.SuggestedWordInfo;
+import org.oscar.kb.latin.common.ComposedData;
+import org.oscar.kb.latin.common.Constants;
+import org.oscar.kb.latin.common.StringUtils;
+import org.oscar.kb.latin.permissions.PermissionsUtil;
+import org.oscar.kb.latin.personalization.UserHistoryDictionary;
+import org.oscar.kb.latin.settings.Settings;
+import org.oscar.kb.latin.settings.SettingsValuesForSuggestion;
+import org.oscar.kb.latin.utils.ExecutorUtils;
+import org.oscar.kb.latin.utils.SuggestionResults;
 
-import org.samyarth.oskey.latin.common.StringUtilsKt;
+import org.oscar.kb.latin.common.StringUtilsKt;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -182,7 +182,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
             }
             return 1f;
         }
-        public final ConcurrentHashMap<String, com.oscar.aikeyboard.latin.ExpandableBinaryDictionary> mSubDictMap =
+        public final ConcurrentHashMap<String, ExpandableBinaryDictionary> mSubDictMap =
                 new ConcurrentHashMap<>();
 
         public DictionaryGroup() {
@@ -192,17 +192,17 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
         public DictionaryGroup(@NonNull final Locale locale,
                 @Nullable final Dictionary mainDict,
                 @Nullable final String account,
-                @NonNull final Map<String, com.oscar.aikeyboard.latin.ExpandableBinaryDictionary> subDicts) {
+                @NonNull final Map<String, ExpandableBinaryDictionary> subDicts) {
             mLocale = locale;
             mAccount = account;
             // The main dictionary can be asynchronously loaded.
             setMainDict(mainDict);
-            for (final Map.Entry<String, com.oscar.aikeyboard.latin.ExpandableBinaryDictionary> entry : subDicts.entrySet()) {
+            for (final Map.Entry<String, ExpandableBinaryDictionary> entry : subDicts.entrySet()) {
                 setSubDict(entry.getKey(), entry.getValue());
             }
         }
 
-        private void setSubDict(@NonNull final String dictType, @NonNull final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary dict) {
+        private void setSubDict(@NonNull final String dictType, @NonNull final ExpandableBinaryDictionary dict) {
             mSubDictMap.put(dictType, dict);
         }
 
@@ -222,7 +222,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
             return getSubDict(dictType);
         }
 
-        public @Nullable com.oscar.aikeyboard.latin.ExpandableBinaryDictionary getSubDict(@NonNull final String dictType) {
+        public @Nullable ExpandableBinaryDictionary getSubDict(@NonNull final String dictType) {
             return mSubDictMap.get(dictType);
         }
 
@@ -302,10 +302,10 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     }
 
     @Nullable
-    private static com.oscar.aikeyboard.latin.ExpandableBinaryDictionary getSubDict(final String dictType,
+    private static ExpandableBinaryDictionary getSubDict(final String dictType,
                                                                                     final Context context, final Locale locale, final File dictFile,
                                                                                     final String dictNamePrefix, @Nullable final String account) {
-        com.oscar.aikeyboard.latin.ExpandableBinaryDictionary dict = null;
+        ExpandableBinaryDictionary dict = null;
         try {
             dict = switch (dictType) {
                 case Dictionary.TYPE_USER_HISTORY -> UserHistoryDictionary.getDictionary(context, locale, dictFile, dictNamePrefix, account);
@@ -394,9 +394,9 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
             }
 
             // create new or re-use already loaded sub-dicts
-            final Map<String, com.oscar.aikeyboard.latin.ExpandableBinaryDictionary> subDicts = new HashMap<>();
+            final Map<String, ExpandableBinaryDictionary> subDicts = new HashMap<>();
             for (final String subDictType : subDictTypesToUse) {
-                final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary subDict;
+                final ExpandableBinaryDictionary subDict;
                 if (noExistingDictsForThisLocale || forceReloadMainDictionary
                         || !oldDictionaryGroupForLocale.hasDict(subDictType, account)) {
                     // Create a new dictionary.
@@ -623,7 +623,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
         )
             return;
 
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary userDict = dictionaryGroup.getSubDict(Dictionary.TYPE_USER);
+        final ExpandableBinaryDictionary userDict = dictionaryGroup.getSubDict(Dictionary.TYPE_USER);
         final Dictionary userHistoryDict = dictionaryGroup.getSubDict(Dictionary.TYPE_USER_HISTORY);
         // user history always reports words as invalid, so here we need to check isInDictionary instead
         // also maybe a problem: words added to dictionaries (user and history) are apparently found
@@ -663,7 +663,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     private void addWordToUserHistory(final DictionaryGroup dictionaryGroup,
             final NgramContext ngramContext, final String word, final boolean wasAutoCapitalized,
             final int timeStampInSeconds, final boolean blockPotentiallyOffensive) {
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary userHistoryDictionary =
+        final ExpandableBinaryDictionary userHistoryDictionary =
                 dictionaryGroup.getSubDict(Dictionary.TYPE_USER_HISTORY);
         if (userHistoryDictionary == null || !hasLocale(userHistoryDictionary.mLocale)) {
             return;
@@ -715,7 +715,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
         // We demote unrecognized words (frequency < 0, below) by specifying them as "invalid".
         // We don't add words with 0-frequency (assuming they would be profanity etc.).
         final boolean isValid = maxFreq > 0;
-        com.oscar.aikeyboard.latin.personalization.UserHistoryDictionary.addToDictionary(userHistoryDictionary, ngramContext, secondWord,
+        UserHistoryDictionary.addToDictionary(userHistoryDictionary, ngramContext, secondWord,
                 isValid, timeStampInSeconds);
     }
 
@@ -753,7 +753,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     }
 
     private void removeWord(final String dictName, final String word) {
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary dictionary = getCurrentlyPreferredDictionaryGroup().getSubDict(dictName);
+        final ExpandableBinaryDictionary dictionary = getCurrentlyPreferredDictionaryGroup().getSubDict(dictName);
         if (dictionary != null) {
             dictionary.removeUnigramEntryDynamically(word);
         }
@@ -936,17 +936,17 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
 
     private void removeWordFromGroup(String word, DictionaryGroup group) {
         // remove from user history
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary historyDict = group.getSubDict(Dictionary.TYPE_USER_HISTORY);
+        final ExpandableBinaryDictionary historyDict = group.getSubDict(Dictionary.TYPE_USER_HISTORY);
         if (historyDict != null) {
             historyDict.removeUnigramEntryDynamically(word);
         }
         // and from personal dictionary
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary userDict = group.getSubDict(Dictionary.TYPE_USER);
+        final ExpandableBinaryDictionary userDict = group.getSubDict(Dictionary.TYPE_USER);
         if (userDict != null) {
             userDict.removeUnigramEntryDynamically(word);
         }
 
-        final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary contactsDict = group.getSubDict(Dictionary.TYPE_CONTACTS);
+        final ExpandableBinaryDictionary contactsDict = group.getSubDict(Dictionary.TYPE_CONTACTS);
         if (contactsDict != null) {
             if (contactsDict.isInDictionary(word)) {
                 contactsDict.removeUnigramEntryDynamically(word); // will be gone until next reload of dict
@@ -1037,7 +1037,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     @Override
     public boolean clearUserHistoryDictionary(final Context context) {
         for (DictionaryGroup dictionaryGroup : mDictionaryGroups) {
-            final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary dictionary = dictionaryGroup.getSubDict(Dictionary.TYPE_USER_HISTORY);
+            final ExpandableBinaryDictionary dictionary = dictionaryGroup.getSubDict(Dictionary.TYPE_USER_HISTORY);
             if (dictionary == null) {
                 return false; // should only ever happen for primary dictionary, so this is safe
             }
@@ -1074,7 +1074,7 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
     @NonNull public List<DictionaryStats> getDictionaryStats(final Context context) {
         final ArrayList<DictionaryStats> statsOfEnabledSubDicts = new ArrayList<>();
         for (final String dictType : DYNAMIC_DICTIONARY_TYPES) {
-            final com.oscar.aikeyboard.latin.ExpandableBinaryDictionary dictionary = mDictionaryGroups.get(0).getSubDict(dictType);
+            final ExpandableBinaryDictionary dictionary = mDictionaryGroups.get(0).getSubDict(dictType);
             if (dictionary == null) continue;
             statsOfEnabledSubDicts.add(dictionary.getDictionaryStats());
         }

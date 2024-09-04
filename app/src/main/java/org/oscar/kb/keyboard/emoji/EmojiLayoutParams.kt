@@ -3,16 +3,16 @@
  * modified
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
-package helium314.keyboard.keyboard.emoji
+package org.oscar.kb.keyboard.emoji
 
 import android.content.res.Resources
 import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import helium314.keyboard.keyboard.internal.KeyboardParams
-import helium314.keyboard.latin.R
-import helium314.keyboard.latin.settings.Settings
-import helium314.keyboard.latin.utils.ResourceUtils
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.ResourceUtils
 
 internal class EmojiLayoutParams(res: Resources) {
     private val emojiListBottomMargin: Int
@@ -28,7 +28,8 @@ internal class EmojiLayoutParams(res: Resources) {
             res.getFraction(R.fraction.config_key_vertical_gap_holo_narrow,
                 defaultKeyboardHeight, defaultKeyboardHeight).toInt()
         } else {
-            res.getFraction(R.fraction.config_key_vertical_gap_holo,
+            res.getFraction(
+                R.fraction.config_key_vertical_gap_holo,
                 defaultKeyboardHeight, defaultKeyboardHeight).toInt()
         }
         val bottomPadding = (res.getFraction(R.fraction.config_keyboard_bottom_padding_holo,

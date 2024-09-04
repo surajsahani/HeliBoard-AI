@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-package org.samyarth.oskey.keyboard.clipboard
+package org.oscar.kb.keyboard.clipboard
 
 import android.content.res.Resources
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import org.samyarth.oskey.R
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.utils.ResourceUtils
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.internal.KeyboardParams
+import org.oscar.kb.latin.settings.Settings
+import org.oscar.kb.latin.utils.ResourceUtils
 
 class ClipboardLayoutParams(res: Resources) {
 

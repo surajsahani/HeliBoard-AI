@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-package org.samyarth.oskey.latin.settings
+package org.oscar.kb.latin.settings
 
 import android.app.Activity
 import android.content.Intent
@@ -16,16 +16,12 @@ import androidx.core.util.TypedValueCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
-import org.samyarth.oskey.R
-import org.samyarth.oskey.keyboard.KeyboardSwitcher
-import org.samyarth.oskey.keyboard.KeyboardTheme
-import org.samyarth.oskey.latin.common.FileUtils
-import org.samyarth.oskey.latin.settings.SeekBarDialogPreference
-import org.samyarth.oskey.latin.settings.Settings
-import org.samyarth.oskey.latin.settings.SettingsValues
-import org.samyarth.oskey.latin.settings.SubScreenFragment
-import org.samyarth.oskey.latin.utils.getStringResourceOrName
-import org.samyarth.oskey.latin.utils.infoDialog
+import org.oscar.kb.R
+import org.oscar.kb.keyboard.KeyboardSwitcher
+import org.oscar.kb.keyboard.KeyboardTheme
+import org.oscar.kb.latin.common.FileUtils
+import org.oscar.kb.latin.utils.getStringResourceOrName
+import org.oscar.kb.latin.utils.infoDialog
 import java.lang.Float.max
 import java.lang.Float.min
 import java.util.*
