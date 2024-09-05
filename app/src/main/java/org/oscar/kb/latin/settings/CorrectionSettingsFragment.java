@@ -46,7 +46,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment
                 && prefs.getBoolean(key, false)
                 && !PermissionsUtil.checkAllPermissionsGranted(getActivity(), Manifest.permission.READ_CONTACTS)
         ) {
-            PermissionsManager.get(requireContext()).requestPermissions(this, getActivity(), Manifest.permission.READ_CONTACTS);
+            get(requireContext()).requestPermissions(this, getActivity(), Manifest.permission.READ_CONTACTS);
         } else if (Settings.PREF_KEY_USE_PERSONALIZED_DICTS.equals(key) && !prefs.getBoolean(key, true)) {
             new AlertDialog.Builder(requireContext())
                     .setMessage(R.string.disable_personalized_dicts_message)

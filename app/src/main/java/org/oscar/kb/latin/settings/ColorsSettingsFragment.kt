@@ -215,7 +215,7 @@ open class ColorsSettingsFragment : Fragment(R.layout.color_settings), MenuProvi
 
     private fun showMainColors() {
         binding.info.isGone = true
-        val prefPrefix = if (isNight) Settings.PREF_THEME_USER_COLOR_NIGHT_PREFIX else _root_ide_package_.org.oscar.kb.latin.settings.Settings.PREF_THEME_USER_COLOR_PREFIX
+        val prefPrefix = if (isNight) Settings.PREF_THEME_USER_COLOR_NIGHT_PREFIX else Settings.PREF_THEME_USER_COLOR_PREFIX
         colorPrefsAndNames.forEachIndexed { index, (colorPref, colorPrefName) ->
             val autoColor = prefs.getBoolean(prefPrefix + colorPref + Settings.PREF_AUTO_USER_COLOR_SUFFIX, true)
             if (moreColors == 0 && colorPref in colorPrefsToHideInitially && autoColor)

@@ -9,6 +9,7 @@ package org.oscar.kb.latin;
 import org.inputmethod.latin.BinaryDictionary;
 import org.oscar.kb.latin.common.ComposedData;
 import org.oscar.kb.latin.settings.SettingsValuesForSuggestion;
+import org.oscar.kb.latin.SuggestedWords.SuggestedWordInfo;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -70,7 +71,7 @@ public final class ReadOnlyBinaryDictionary extends Dictionary {
     }
 
     @Override
-    public boolean shouldAutoCommit(final SuggestedWords.SuggestedWordInfo candidate) {
+    public boolean shouldAutoCommit(final SuggestedWordInfo candidate) {
         if (mLock.readLock().tryLock()) {
             try {
                 return mBinaryDictionary.shouldAutoCommit(candidate);

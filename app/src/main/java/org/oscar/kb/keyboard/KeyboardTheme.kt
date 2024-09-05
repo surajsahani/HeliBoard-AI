@@ -97,7 +97,7 @@ private constructor(val themeId: Int, @JvmField val mStyleId: Int) {
         }
 
         fun getThemeActionAndEmojiKeyLabelFlags(themeId: Int): Int {
-            return if (themeId == THEME_ID_LXX_BASE || themeId == THEME_ID_ROUNDED_BASE) _root_ide_package_.org.oscar.kb.keyboard.Key.LABEL_FLAGS_KEEP_BACKGROUND_ASPECT_RATIO else 0
+            return if (themeId == THEME_ID_LXX_BASE || themeId == THEME_ID_ROUNDED_BASE) Key.LABEL_FLAGS_KEEP_BACKGROUND_ASPECT_RATIO else 0
         }
 
         @JvmStatic

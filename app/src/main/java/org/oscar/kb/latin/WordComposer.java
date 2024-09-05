@@ -50,7 +50,7 @@ public final class WordComposer {
     // The list of events that served to compose this string.
     private final ArrayList<Event> mEvents;
     private final InputPointers mInputPointers = new InputPointers(MAX_WORD_LENGTH);
-    private SuggestedWords.SuggestedWordInfo mAutoCorrection;
+    private SuggestedWordInfo mAutoCorrection;
     private boolean mIsResumed;
     private boolean mIsBatchMode;
     // A memory of the last rejected batch mode suggestion, if any. This goes like this: the user
@@ -427,14 +427,14 @@ public final class WordComposer {
     /**
      * Sets the auto-correction for this word.
      */
-    public void setAutoCorrection(final SuggestedWords.SuggestedWordInfo autoCorrection) {
+    public void setAutoCorrection(final SuggestedWordInfo autoCorrection) {
         mAutoCorrection = autoCorrection;
     }
 
     /**
      * @return the auto-correction for this word, or null if none.
      */
-    public SuggestedWords.SuggestedWordInfo getAutoCorrectionOrNull() {
+    public SuggestedWordInfo getAutoCorrectionOrNull() {
         return mAutoCorrection;
     }
 

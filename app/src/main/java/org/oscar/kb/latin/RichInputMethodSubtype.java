@@ -21,6 +21,8 @@ import org.oscar.kb.latin.utils.SubtypeUtilsKt;
 
 import java.util.Locale;
 
+import static org.oscar.kb.latin.common.Constants.Subtype.KEYBOARD_MODE;
+
 
 /**
  * Enrichment class for InputMethodSubtype to enable concurrent multi-lingual input.
@@ -166,7 +168,7 @@ public class RichInputMethodSubtype {
                     .setSubtypeNameResId(R.string.subtype_no_language_qwerty)
                     .setSubtypeIconResId(R.drawable.ic_ime_switcher)
                     .setSubtypeLocale(SubtypeLocaleUtils.NO_LANGUAGE)
-                    .setSubtypeMode(Constants.Subtype.KEYBOARD_MODE)
+                    .setSubtypeMode(KEYBOARD_MODE)
                     .setSubtypeExtraValue(EXTRA_VALUE_OF_DUMMY_NO_LANGUAGE_SUBTYPE)
                     .setIsAuxiliary(false)
                     .setOverridesImplicitlyEnabledSubtype(false)
@@ -186,7 +188,7 @@ public class RichInputMethodSubtype {
                     .setSubtypeNameResId(R.string.subtype_emoji)
                     .setSubtypeIconResId(R.drawable.ic_ime_switcher)
                     .setSubtypeLocale(SubtypeLocaleUtils.NO_LANGUAGE)
-                    .setSubtypeMode(Constants.Subtype.KEYBOARD_MODE)
+                    .setSubtypeMode(KEYBOARD_MODE)
                     .setSubtypeExtraValue(EXTRA_VALUE_OF_DUMMY_EMOJI_SUBTYPE)
                     .setIsAuxiliary(false)
                     .setOverridesImplicitlyEnabledSubtype(false)

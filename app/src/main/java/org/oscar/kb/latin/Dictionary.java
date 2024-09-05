@@ -174,7 +174,7 @@ public abstract class Dictionary {
      * @param candidate The candidate suggestion, in whole (not only the first part).
      * @return whether we should auto-commit or not.
      */
-    public boolean shouldAutoCommit(final SuggestedWords.SuggestedWordInfo candidate) {
+    public boolean shouldAutoCommit(final SuggestedWordInfo candidate) {
         // If we don't have support for auto-commit, or if we don't know, we return false to
         // avoid auto-committing stuff. Implementations of the Dictionary class that know to
         // determine whether we should auto-commit will override this.

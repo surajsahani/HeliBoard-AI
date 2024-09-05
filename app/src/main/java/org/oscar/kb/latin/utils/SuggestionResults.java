@@ -63,7 +63,7 @@ public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
         return super.addAll(e);
     }
 
-    static final class SuggestedWordInfoComparator implements Comparator<SuggestedWords.SuggestedWordInfo> {
+    static final class SuggestedWordInfoComparator implements Comparator<SuggestedWordInfo> {
         // This comparator ranks the word info with the higher frequency first. That's because
         // that's the order we want our elements in.
         @Override

@@ -150,12 +150,12 @@ class ClipboardHistoryManager(
 
     private fun isClipSensitive(inputType: Int): Boolean {
         ClipboardManagerCompat.getClipSensitivity(clipboardManager.primaryClip?.description)?.let { return it }
-        return _root_ide_package_.org.oscar.kb.latin.utils.InputTypeUtils.isPasswordInputType(inputType)
+        return InputTypeUtils.isPasswordInputType(inputType)
     }
 
     // pinned clips are stored in default shared preferences, not in device protected preferences!
     private fun loadPinnedClips() {
-        val pinnedClipString = _root_ide_package_.org.oscar.kb.latin.settings.Settings.readPinnedClipString(latinIME)
+        val pinnedClipString = Settings.readPinnedClipString(latinIME)
         if (pinnedClipString.isEmpty()) return
         val pinnedClips: List<ClipboardHistoryEntry> = Json.decodeFromString(pinnedClipString)
         historyEntries.addAll(pinnedClips)
@@ -169,7 +169,7 @@ class ClipboardHistoryManager(
 
     private fun savePinnedClips() {
         val pinnedClips = Json.encodeToString(historyEntries.filter { it.isPinned })
-        _root_ide_package_.org.oscar.kb.latin.settings.Settings.writePinnedClipString(latinIME, pinnedClips)
+        Settings.writePinnedClipString(latinIME, pinnedClips)
     }
 
     interface OnHistoryChangeListener {
@@ -206,7 +206,7 @@ class ClipboardHistoryManager(
         textView.setOnClickListener {
             dontShowCurrentSuggestion = true
             latinIME.onTextInput(content.toString())
-            _root_ide_package_.org.oscar.kb.latin.AudioAndHapticFeedbackManager.getInstance()
+            AudioAndHapticFeedbackManager.getInstance()
                 .performHapticAndAudioFeedback(KeyCode.NOT_SPECIFIED, it)
             binding.root.isGone = true
         }

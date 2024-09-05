@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.oscar.kb.compat.ConfigurationCompatKt;
-import org.oscar.kb.latin.common.Constants;
 import org.oscar.kb.latin.common.LocaleUtils;
 import org.oscar.kb.latin.settings.Settings;
 import org.oscar.kb.latin.utils.DeviceProtectedUtils;
@@ -35,6 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static org.oscar.kb.latin.common.Constants.Subtype.KEYBOARD_MODE;
 
 /**
  * Enrichment class for InputMethodManager to simplify interaction and add functionality.
@@ -288,7 +289,7 @@ public class RichInputMethodManager {
         // both explicitly and implicitly enabled input method subtype.
         // (The current IME should be LatinIME.)
         for (InputMethodSubtype subtype : subtypes) {
-            if (Constants.Subtype.KEYBOARD_MODE.equals(subtype.getMode())) {
+            if (KEYBOARD_MODE.equals(subtype.getMode())) {
                 ++keyboardCount;
             }
         }

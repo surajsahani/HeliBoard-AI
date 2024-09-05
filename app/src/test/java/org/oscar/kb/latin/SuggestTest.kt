@@ -294,7 +294,7 @@ fun suggestion(word: String, score: Int, locale: Locale) =
         0 // irrelevant?
     )
 
-@Implements(_root_ide_package_.org.oscar.kb.latin.DictionaryFacilitatorImpl::class)
+@Implements(DictionaryFacilitatorImpl::class)
 class ShadowFacilitator {
     @Implementation
     fun getCurrentLocale(): Locale = currentTypingLocale

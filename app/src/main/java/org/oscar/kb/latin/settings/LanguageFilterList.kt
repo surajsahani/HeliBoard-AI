@@ -73,7 +73,7 @@ private class LanguageAdapter(list: List<MutableList<SubtypeInfo>> = listOf(), c
 
     override fun getItemCount() = list.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.language_list_item, parent, false)
         return ViewHolder(v)
     }

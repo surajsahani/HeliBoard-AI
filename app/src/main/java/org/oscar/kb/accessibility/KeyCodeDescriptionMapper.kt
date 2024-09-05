@@ -56,7 +56,7 @@ internal class KeyCodeDescriptionMapper private constructor() {
      * @param shouldObscure {@true} if text (e.g. non-control) characters should be obscured.
      * @return a character sequence describing the action performed by pressing the key
      */
-    fun getDescriptionForKey(context: Context, keyboard: _root_ide_package_.org.oscar.kb.keyboard.Keyboard?, key: _root_ide_package_.org.oscar.kb.keyboard.Key, shouldObscure: Boolean): String? {
+    fun getDescriptionForKey(context: Context, keyboard: Keyboard?, key: Key, shouldObscure: Boolean): String? {
         val code = key.code
         if (code == KeyCode.SYMBOL_ALPHA || code == KeyCode.SYMBOL || code == KeyCode.ALPHA) {
             val description = getDescriptionForSwitchAlphaSymbol(context, keyboard)
@@ -128,7 +128,7 @@ internal class KeyCodeDescriptionMapper private constructor() {
          * @param keyboard The keyboard on which the key resides.
          * @return a character sequence describing the action performed by pressing the key
          */
-        private fun getDescriptionForSwitchAlphaSymbol(context: Context, keyboard: _root_ide_package_.org.oscar.kb.keyboard.Keyboard?): String? {
+        private fun getDescriptionForSwitchAlphaSymbol(context: Context, keyboard: Keyboard?): String? {
             val resId = when (val elementId = keyboard?.mId?.mElementId) {
                 KeyboardId.ELEMENT_ALPHABET, KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED, KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED, KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED, KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED -> R.string.spoken_description_to_symbol
                 KeyboardId.ELEMENT_SYMBOLS, KeyboardId.ELEMENT_SYMBOLS_SHIFTED -> R.string.spoken_description_to_alpha
@@ -149,7 +149,7 @@ internal class KeyCodeDescriptionMapper private constructor() {
          * @param keyboard The keyboard on which the key resides.
          * @return A context-sensitive description of the "Shift" key.
          */
-        private fun getDescriptionForShiftKey(context: Context, keyboard: _root_ide_package_.org.oscar.kb.keyboard.Keyboard?): String {
+        private fun getDescriptionForShiftKey(context: Context, keyboard: Keyboard?): String {
             val resId: Int = when (keyboard?.mId?.mElementId) {
                 KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED, KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED -> R.string.spoken_description_caps_lock
                 KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED, KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED -> R.string.spoken_description_shift_shifted
@@ -168,7 +168,7 @@ internal class KeyCodeDescriptionMapper private constructor() {
          * @param key The key to describe.
          * @return Returns a context-sensitive description of the "Enter" action key.
          */
-        private fun getDescriptionForActionKey(context: Context, keyboard: _root_ide_package_.org.oscar.kb.keyboard.Keyboard?, key: _root_ide_package_.org.oscar.kb.keyboard.Key): String {
+        private fun getDescriptionForActionKey(context: Context, keyboard: Keyboard?, key: Key): String {
             // Always use the label, if available.
             if (!TextUtils.isEmpty(key.label)) {
                 return key.label!!.trim { it <= ' ' }

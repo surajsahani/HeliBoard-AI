@@ -82,7 +82,7 @@ public final class PopupSuggestionsView extends PopupKeysKeyboardView {
 
     @Override
     protected void onKeyInput(final Key key, final int x, final int y) {
-        if (!(key instanceof MoreSuggestions.MoreSuggestionKey)) {
+        if (!(key instanceof MoreSuggestionKey)) {
             Log.e(TAG, "Expected key is MoreSuggestionKey, but found "
                     + key.getClass().getName());
             return;

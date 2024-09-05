@@ -192,16 +192,13 @@ fun editCustomLayout(layoutName: String, context: Context, startContent: String?
         .setView(editText)
         .setPositiveButton(R.string.save) { _, _ ->
             val content = editText.text.toString()
-            val isJson = checkLayout(content, context)
-            if (isJson == null) {
+            //val isJson = checkLayout(content, context)
+            if (!checkLayout(content, context)) {
                 editCustomLayout(layoutName, context, content)
                 infoDialog(context, context.getString(R.string.layout_error, Log.getLog(10).lastOrNull { it.tag == TAG }?.message))
             } else {
-                val wasJson = file.name.substringAfterLast(".") == "json"
                 file.parentFile?.mkdir()
                 file.writeText(content)
-                if (isJson != wasJson) // unlikely to be needed, but better be safe
-                    file.renameTo(File(file.absolutePath.substringBeforeLast(".") + "." + if (isJson) "json" else "txt"))
                 onCustomLayoutFileListChanged()
                 KeyboardSwitcher.getInstance().forceUpdateKeyboardTheme(context)
             }

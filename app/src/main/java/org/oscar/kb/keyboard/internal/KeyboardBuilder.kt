@@ -156,7 +156,7 @@ open class KeyboardBuilder<KP : KeyboardParams>(protected val mContext: Context,
                 val spacerWidth = spaceLeft.mWidth + spacerRelativeWidth - spaceLeftWidth - spaceRightWidth
                 if (spacerWidth > 0.05f) {
                     // only insert if the spacer has a reasonable width
-                    val spaceRight = Key.KeyParams(spaceLeft)
+                    val spaceRight = KeyParams(spaceLeft)
                     spaceLeft.mWidth = spaceLeftWidth
                     spaceRight.mWidth = spaceRightWidth
                     spacer.mWidth = spacerWidth

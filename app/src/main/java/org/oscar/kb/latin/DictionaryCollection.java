@@ -52,7 +52,7 @@ public final class DictionaryCollection extends Dictionary {
     }
 
     @Override
-    public ArrayList<SuggestedWords.SuggestedWordInfo> getSuggestions(final ComposedData composedData,
+    public ArrayList<SuggestedWordInfo> getSuggestions(final ComposedData composedData,
                                                                       final NgramContext ngramContext, final long proximityInfoHandle,
                                                                       final SettingsValuesForSuggestion settingsValuesForSuggestion,
                                                                       final int sessionId, final float weightForLocale,

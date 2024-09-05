@@ -184,7 +184,7 @@ class KeyboardAccessibilityNodeProvider<KV : KeyboardView>(
         val boundsInParent = key.hitBox
         // Calculate the key's in-screen bounds.
         mTempBoundsInScreen.set(boundsInParent)
-        mTempBoundsInScreen.offset(CoordinateUtils.x(mParentLocation), _root_ide_package_.org.oscar.kb.latin.common.CoordinateUtils.y(mParentLocation))
+        mTempBoundsInScreen.offset(CoordinateUtils.x(mParentLocation), CoordinateUtils.y(mParentLocation))
         val boundsInScreen = mTempBoundsInScreen
         // Obtain and initialize an AccessibilityNodeInfo with information about the virtual view.
         val info = AccessibilityNodeInfoCompat.obtain()

@@ -10,7 +10,7 @@ import org.oscar.kb.event.HangulCombiner.HangulJamo
 object HangulEventDecoder {
 
     @JvmStatic
-    fun decodeHardwareKeyEvent(subtype: _root_ide_package_.org.oscar.kb.latin.RichInputMethodSubtype, event: KeyEvent, defaultEvent: () -> Event): Event {
+    fun decodeHardwareKeyEvent(subtype: RichInputMethodSubtype, event: KeyEvent, defaultEvent: () -> Event): Event {
         val layout = LAYOUTS[subtype.keyboardLayoutSetName] ?: return defaultEvent()
         val codePoint = layout[event.keyCode]?.let { if (event.isShiftPressed) it.second else it.first } ?: return defaultEvent()
         val hardwareEvent = Event.createHardwareKeypressEvent(
@@ -26,7 +26,7 @@ object HangulEventDecoder {
     @JvmStatic
     fun decodeSoftwareKeyEvent(event: Event): Event {
         if (event.isCombining) return event
-        return if (HangulJamo.of(event.mCodePoint) is HangulCombiner.HangulJamo.NonHangul) event
+        return if (HangulJamo.of(event.mCodePoint) is HangulJamo.NonHangul) event
         else Event.createCombiningEvent(event)
     }
 

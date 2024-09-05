@@ -61,6 +61,7 @@ import java.util.Locale;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
+import org.oscar.kb.latin.Suggest.OnGetSuggestedWordsCallback;
 /**
  * This class manages the input logic.
  */
@@ -274,7 +275,7 @@ public final class InputLogic {
     // Called from {@link SuggestionStripView} through the {@link SuggestionStripView#Listener}
     // interface
     public InputTransaction onPickSuggestionManually(final SettingsValues settingsValues,
-                                                     final SuggestedWords.SuggestedWordInfo suggestionInfo, final int keyboardShiftState,
+                                                     final SuggestedWordInfo suggestionInfo, final int keyboardShiftState,
                                                      final String currentKeyboardScript, final LatinIME.UIHandler handler) {
         final SuggestedWords suggestedWords = mSuggestedWords;
         final String suggestion = suggestionInfo.mWord;
@@ -314,7 +315,7 @@ public final class InputLogic {
         // code path as for other kinds, use commitChosenWord, and do everything normally. We will
         // however need to reset the suggestion strip right away, because we know we can't take
         // the risk of calling commitCompletion twice because we don't know how the app will react.
-        if (suggestionInfo.isKindOf(SuggestedWords.SuggestedWordInfo.KIND_APP_DEFINED)) {
+        if (suggestionInfo.isKindOf(SuggestedWordInfo.KIND_APP_DEFINED)) {
             mSuggestedWords = SuggestedWords.getEmptyInstance();
             mSuggestionStripViewAccessor.setNeutralSuggestionStrip();
             inputTransaction.requireShiftUpdate(InputTransaction.SHIFT_UPDATE_NOW);
@@ -805,21 +806,6 @@ public final class InputLogic {
         }
     }
 
-    private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
-
-//    private void speakNow() {
-//            Log.d(TAG, "Voice input clicked");
-//
-//            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-//            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi i'm Oscar ai, \\n I'm Listening..\"");
-//
-//            // Use startActivityForResult or startActivity depending on your needs
-//            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT, null); // Replace REQUEST_CODE with your desired code
-//
-//
-//    }
 
     /**
      * Handle an event that is not a functional event.
@@ -1766,7 +1752,7 @@ public final class InputLogic {
             for (final String s : span.getSuggestions()) {
                 ++i;
                 if (!TextUtils.equals(s, typedWordString)) {
-                    suggestions.add(new SuggestedWords.SuggestedWordInfo(s,
+                    suggestions.add(new SuggestedWordInfo(s,
                             "" /* prevWordsContext */, SuggestedWords.MAX_SUGGESTIONS - i,
                             SuggestedWordInfo.KIND_RESUMED, Dictionary.DICTIONARY_RESUMED,
                             SuggestedWordInfo.NOT_AN_INDEX /* indexOfTouchPointOfSecondWord */,
@@ -2282,7 +2268,7 @@ public final class InputLogic {
             // INPUT_STYLE_TYPING.
             performUpdateSuggestionStripSync(settingsValues, SuggestedWords.INPUT_STYLE_TYPING);
         }
-        final SuggestedWords.SuggestedWordInfo autoCorrectionOrNull = mWordComposer.getAutoCorrectionOrNull();
+        final SuggestedWordInfo autoCorrectionOrNull = mWordComposer.getAutoCorrectionOrNull();
         final String typedWord = mWordComposer.getTypedWord();
         final String stringToCommit = (autoCorrectionOrNull != null)
                 ? autoCorrectionOrNull.mWord : typedWord;
@@ -2412,7 +2398,7 @@ public final class InputLogic {
 
     public void getSuggestedWords(final SettingsValues settingsValues,
                                   final Keyboard keyboard, final int keyboardShiftMode, final int inputStyle,
-                                  final int sequenceNumber, final Suggest.OnGetSuggestedWordsCallback callback) {
+                                  final int sequenceNumber, final OnGetSuggestedWordsCallback callback) {
         mWordComposer.adviseCapitalizedModeBeforeFetchingSuggestions(
                 getActualCapsMode(settingsValues, keyboardShiftMode));
         mSuggest.getSuggestedWords(mWordComposer,

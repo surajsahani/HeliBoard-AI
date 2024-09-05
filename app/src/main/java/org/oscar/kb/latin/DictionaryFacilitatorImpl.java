@@ -737,19 +737,20 @@ public class DictionaryFacilitatorImpl implements DictionaryFacilitator {
         if (mDictionaryGroups.size() == 1)
             return mDictionaryGroups.get(0);
         // that preferred group should have at least MAX_CONFIDENCE
-        int highestGroup = -1;
-        int highestGroupConfidence = DictionaryGroup.MAX_CONFIDENCE - 1;
+        int preferredGroup = -1;
         for (int i = 0; i < mDictionaryGroups.size(); i ++) {
             final DictionaryGroup dictionaryGroup = mDictionaryGroups.get(i);
-            if (dictionaryGroup.mConfidence > highestGroupConfidence) {
-                highestGroup = i;
-                highestGroupConfidence = dictionaryGroup.mConfidence;
-            } else if (dictionaryGroup.mConfidence == highestGroupConfidence) {
-                highestGroup = -1; // unset group on a tie
+            if (dictionaryGroup.mConfidence == 0) continue;
+            if (dictionaryGroup.mConfidence >= DictionaryGroup.MAX_CONFIDENCE && preferredGroup == -1) {
+                preferredGroup = i;
+                continue;
             }
+            // either we have 2 groups with high confidence, or a group with low but non-0 confidence
+            // in either case, we're not sure enough and return null
+            return null;
         }
-        if (highestGroup == -1) return null;
-        return mDictionaryGroups.get(highestGroup);
+        if (preferredGroup == -1) return null;
+        return mDictionaryGroups.get(preferredGroup);
     }
 
     private void removeWord(final String dictName, final String word) {

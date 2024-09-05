@@ -14,6 +14,7 @@ import org.oscar.kb.latin.Dictionary;
 import org.oscar.kb.latin.NgramContext;
 import org.oscar.kb.latin.common.StringUtils;
 import org.oscar.kb.latin.utils.CombinedFormatUtils;
+import org.oscar.kb.latin.NgramContext.WordInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +50,7 @@ public final class WordProperty implements Comparable<WordProperty> {
             mNgrams = null;
         } else {
             mNgrams = new ArrayList<>();
-            final NgramContext ngramContext = new NgramContext(new NgramContext.WordInfo(mWord));
+            final NgramContext ngramContext = new NgramContext(new WordInfo(mWord));
             for (final WeightedString bigramTarget : bigrams) {
                 mNgrams.add(new NgramProperty(bigramTarget, ngramContext));
             }
@@ -98,11 +99,11 @@ public final class WordProperty implements Comparable<WordProperty> {
             final int[][] prevWords = ngramPrevWordsArray.get(i);
             final boolean[] isBeginningOfSentenceArray =
                     ngramPrevWordIsBeginningOfSentenceArray.get(i);
-            final NgramContext.WordInfo[] wordInfoArray = new NgramContext.WordInfo[prevWords.length];
+            final WordInfo[] wordInfoArray = new WordInfo[prevWords.length];
             for (int j = 0; j < prevWords.length; j++) {
                 wordInfoArray[j] = isBeginningOfSentenceArray[j]
-                        ? NgramContext.WordInfo.BEGINNING_OF_SENTENCE_WORD_INFO
-                        : new NgramContext.WordInfo(StringUtils.getStringFromNullTerminatedCodePointArray(
+                        ? WordInfo.BEGINNING_OF_SENTENCE_WORD_INFO
+                        : new WordInfo(StringUtils.getStringFromNullTerminatedCodePointArray(
                         prevWords[j]));
             }
             final NgramContext ngramContext = new NgramContext(wordInfoArray);

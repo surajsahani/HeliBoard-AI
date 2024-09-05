@@ -21,6 +21,8 @@ import org.oscar.kb.latin.utils.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.oscar.kb.latin.common.Constants.ImeOption.NO_FLOATING_GESTURE_PREVIEW;
+import static org.oscar.kb.latin.common.Constants.ImeOption.NO_MICROPHONE;
 /**
  * Class to hold attributes of the input field.
  */
@@ -106,7 +108,7 @@ public final class InputAttributes {
         mShouldShowVoiceInputKey = !noMicrophone;
 
         mDisableGestureFloatingPreviewText = InputAttributes.inPrivateImeOptions(
-                mPackageNameForPrivateImeOptions, Constants.ImeOption.NO_FLOATING_GESTURE_PREVIEW, editorInfo);
+                mPackageNameForPrivateImeOptions, NO_FLOATING_GESTURE_PREVIEW, editorInfo);
 
         // autocorrect if explicitly wanted, but also for most multi-line input types (like AOSP keyboard)
         // originally, URI and email were always excluded from autocorrect (in Suggest.java), but this is
@@ -147,7 +149,7 @@ public final class InputAttributes {
     }
 
     private boolean hasNoMicrophoneKeyOption() {
-        return InputAttributes.inPrivateImeOptions(mPackageNameForPrivateImeOptions, Constants.ImeOption.NO_MICROPHONE, mEditorInfo);
+        return InputAttributes.inPrivateImeOptions(mPackageNameForPrivateImeOptions, NO_MICROPHONE, mEditorInfo);
     }
 
     @SuppressWarnings("unused")

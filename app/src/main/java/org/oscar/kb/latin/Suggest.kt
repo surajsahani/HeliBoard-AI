@@ -292,7 +292,7 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
                 // the score difference may need tuning, but so far it seems alright
                 val firstWordBonusScore =
                     ((if (first.isKindOf(SuggestedWordInfo.KIND_WHITELIST)) 20 else 0) // large bonus because it's wanted by dictionary
-                            + (if (_root_ide_package_.org.oscar.kb.latin.common.StringUtils.isLowerCaseAscii(typedWordString)) 5 else 0) // small bonus because typically only lower case ascii is typed (applies to latin keyboards only)
+                            + (if (StringUtils.isLowerCaseAscii(typedWordString)) 5 else 0) // small bonus because typically only lower case ascii is typed (applies to latin keyboards only)
                             + if (first.mScore > typedWordInfo.mScore) 5 else 0) // small bonus if score is higher
                 val firstScoreForEmpty = firstAndTypedEmptyInfos.first?.mScore ?: 0
                 val typedScoreForEmpty = firstAndTypedEmptyInfos.second?.mScore ?: 0
@@ -422,7 +422,7 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
         suggestionsContainer: ArrayList<SuggestedWordInfo>,
         nextWordSuggestions: SuggestionResults, rejected: SuggestedWordInfo?
     ): SuggestedWordInfo? {
-        if (pseudoTypedWordInfo == null || !_root_ide_package_.org.oscar.kb.latin.settings.Settings.getInstance().current.mUsePersonalizedDicts
+        if (pseudoTypedWordInfo == null || !Settings.getInstance().current.mUsePersonalizedDicts
             || pseudoTypedWordInfo.mSourceDict.mDictType != Dictionary.TYPE_MAIN || suggestionsContainer.size < 2
         ) return pseudoTypedWordInfo
         nextWordSuggestions.removeAll { info: SuggestedWordInfo -> info.mScore < 170 } // we only want reasonably often typed words, value may require tuning

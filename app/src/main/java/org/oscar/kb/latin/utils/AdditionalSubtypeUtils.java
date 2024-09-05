@@ -43,7 +43,7 @@ public final class AdditionalSubtypeUtils {
     }
 
     public static boolean isAdditionalSubtype(final InputMethodSubtype subtype) {
-        return subtype.containsExtraValueKey(Constants.Subtype.ExtraValue.IS_ADDITIONAL_SUBTYPE);
+        return subtype.containsExtraValueKey(IS_ADDITIONAL_SUBTYPE);
     }
 
     private static final String LOCALE_AND_LAYOUT_SEPARATOR = ":";
@@ -66,7 +66,7 @@ public final class AdditionalSubtypeUtils {
                 .setSubtypeNameResId(nameId)
                 .setSubtypeIconResId(R.drawable.ic_ime_switcher)
                 .setSubtypeLocale(locale.toString())
-                .setSubtypeMode(Constants.Subtype.KEYBOARD_MODE)
+                .setSubtypeMode(KEYBOARD_MODE)
                 .setSubtypeExtraValue(platformVersionDependentExtraValues)
                 .setIsAuxiliary(false)
                 .setOverridesImplicitlyEnabledSubtype(false)
@@ -89,10 +89,10 @@ public final class AdditionalSubtypeUtils {
 
     private static String getPrefSubtype(final InputMethodSubtype subtype) {
         final String keyboardLayoutSetName = SubtypeLocaleUtils.getKeyboardLayoutSetName(subtype);
-        final String layoutExtraValue = Constants.Subtype.ExtraValue.KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName;
+        final String layoutExtraValue = KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName;
         final String extraValue = StringUtils.removeFromCommaSplittableTextIfExists(
                 layoutExtraValue, StringUtils.removeFromCommaSplittableTextIfExists(
-                        Constants.Subtype.ExtraValue.IS_ADDITIONAL_SUBTYPE, subtype.getExtraValue()));
+                        IS_ADDITIONAL_SUBTYPE, subtype.getExtraValue()));
         final String basePrefSubtype = SubtypeUtilsKt.locale(subtype).toLanguageTag() + LOCALE_AND_LAYOUT_SEPARATOR
                 + keyboardLayoutSetName;
         return extraValue.isEmpty() ? basePrefSubtype
@@ -181,18 +181,18 @@ public final class AdditionalSubtypeUtils {
             final String keyboardLayoutSetName, final boolean isAsciiCapable,
             final boolean isEmojiCapable) {
         final ArrayList<String> extraValueItems = new ArrayList<>();
-        extraValueItems.add(Constants.Subtype.ExtraValue.KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName);
+        extraValueItems.add(KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName);
         if (isAsciiCapable) {
-            extraValueItems.add(Constants.Subtype.ExtraValue.ASCII_CAPABLE);
+            extraValueItems.add(ASCII_CAPABLE);
         }
         if (SubtypeLocaleUtils.isExceptionalLocale(locale)) {
-            extraValueItems.add(Constants.Subtype.ExtraValue.UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME + "=" +
+            extraValueItems.add(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME + "=" +
                     SubtypeLocaleUtils.getKeyboardLayoutSetDisplayName(keyboardLayoutSetName));
         }
         if (isEmojiCapable) {
-            extraValueItems.add(Constants.Subtype.ExtraValue.EMOJI_CAPABLE);
+            extraValueItems.add(EMOJI_CAPABLE);
         }
-        extraValueItems.add(Constants.Subtype.ExtraValue.IS_ADDITIONAL_SUBTYPE);
+        extraValueItems.add(IS_ADDITIONAL_SUBTYPE);
         return TextUtils.join(",", extraValueItems);
     }
 
@@ -221,18 +221,18 @@ public final class AdditionalSubtypeUtils {
         // - EmojiCapable
         // - isAdditionalSubtype
         final ArrayList<String> compatibilityExtraValueItems = new ArrayList<>();
-        compatibilityExtraValueItems.add(Constants.Subtype.ExtraValue.KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName);
-        compatibilityExtraValueItems.add(Constants.Subtype.ExtraValue.ASCII_CAPABLE);
+        compatibilityExtraValueItems.add(KEYBOARD_LAYOUT_SET + "=" + keyboardLayoutSetName);
+        compatibilityExtraValueItems.add(ASCII_CAPABLE);
         if (SubtypeLocaleUtils.isExceptionalLocale(locale)) {
-            compatibilityExtraValueItems.add(Constants.Subtype.ExtraValue.UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME + "=" +
+            compatibilityExtraValueItems.add(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME + "=" +
                     SubtypeLocaleUtils.getKeyboardLayoutSetDisplayName(keyboardLayoutSetName));
         }
-        compatibilityExtraValueItems.add(Constants.Subtype.ExtraValue.EMOJI_CAPABLE);
-        compatibilityExtraValueItems.add(Constants.Subtype.ExtraValue.IS_ADDITIONAL_SUBTYPE);
+        compatibilityExtraValueItems.add(EMOJI_CAPABLE);
+        compatibilityExtraValueItems.add(IS_ADDITIONAL_SUBTYPE);
         final String compatibilityExtraValues = TextUtils.join(",", compatibilityExtraValueItems);
         return Arrays.hashCode(new Object[] {
                 locale,
-                Constants.Subtype.KEYBOARD_MODE,
+                KEYBOARD_MODE,
                 compatibilityExtraValues,
                 false /* isAuxiliary */,
                 false /* overrideImplicitlyEnabledSubtype */ });

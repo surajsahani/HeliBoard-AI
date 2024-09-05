@@ -13,6 +13,8 @@ import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
 import org.robolectric.shadows.ShadowInputMethodManager
 import java.util.*
+import org.oscar.kb.latin.common.StringUtils
+
 
 @Implements(LocaleManagerCompat::class)
 object ShadowLocaleManagerCompat {
@@ -39,8 +41,8 @@ object ShadowBinaryDictionaryUtils {
     @Implementation
     @JvmStatic
     fun calcNormalizedScore(beforeString: String, afterString: String, score: Int): Float {
-        val before = _root_ide_package_.org.oscar.kb.latin.common.StringUtils.toCodePointArray(beforeString)
-        val after = _root_ide_package_.org.oscar.kb.latin.common.StringUtils.toCodePointArray(afterString)
+        val before = StringUtils.toCodePointArray(beforeString)
+        val after = StringUtils.toCodePointArray(afterString)
         val distance = editDistance(beforeString, afterString)
         val beforeLength = before.size
         val afterLength = after.size

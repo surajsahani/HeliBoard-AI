@@ -103,6 +103,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import org.oscar.kb.latin.SuggestedWords.SuggestedWordInfo;
+import org.oscar.kb.latin.Suggest.OnGetSuggestedWordsCallback;
 
 
 /**
@@ -1621,7 +1623,7 @@ public class LatinIME extends InputMethodService implements
 
     // TODO[IL]: Move this out of LatinIME.
     public void getSuggestedWords(final int inputStyle, final int sequenceNumber,
-                                  final Suggest.OnGetSuggestedWordsCallback callback) {
+                                  final OnGetSuggestedWordsCallback callback) {
         final Keyboard keyboard = mKeyboardSwitcher.getKeyboard();
         if (keyboard == null) {
             callback.onGetSuggestedWords(SuggestedWords.getEmptyInstance());
@@ -1650,7 +1652,7 @@ public class LatinIME extends InputMethodService implements
     // Called from {@link SuggestionStripView} through the {@link SuggestionStripView#Listener}
     // interface
     @Override
-    public void pickSuggestionManually(final SuggestedWords.SuggestedWordInfo suggestionInfo) {
+    public void pickSuggestionManually(final SuggestedWordInfo suggestionInfo) {
         final InputTransaction completeInputTransaction = mInputLogic.onPickSuggestionManually(
                 mSettings.getCurrent(), suggestionInfo,
                 mKeyboardSwitcher.getKeyboardShiftMode(),

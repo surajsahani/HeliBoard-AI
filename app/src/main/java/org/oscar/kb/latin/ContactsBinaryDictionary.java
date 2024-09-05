@@ -42,7 +42,7 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary
 
     protected ContactsBinaryDictionary(final Context context, final Locale locale,
             final File dictFile, final String name) {
-        super(context, getDictName(name, locale, dictFile), locale, TYPE_CONTACTS,
+        super(context, getDictName(name, locale, dictFile), locale, Dictionary.TYPE_CONTACTS,
                 dictFile);
         mUseFirstLastBigrams = ContactsDictionaryUtils.useFirstLastBigramsForLocale(locale);
         mContactsManager = new ContactsManager(context);

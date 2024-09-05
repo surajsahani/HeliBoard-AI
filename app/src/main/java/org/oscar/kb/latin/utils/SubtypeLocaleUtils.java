@@ -227,8 +227,8 @@ public final class SubtypeLocaleUtils {
     @NonNull
     private static String getReplacementString(@NonNull final InputMethodSubtype subtype,
             @NonNull final Locale displayLocale) {
-        if (subtype.containsExtraValueKey(Constants.Subtype.ExtraValue.UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME)) {
-            return subtype.getExtraValueOf(Constants.Subtype.ExtraValue.UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME);
+        if (subtype.containsExtraValueKey(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME)) {
+            return subtype.getExtraValueOf(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME);
         }
         return getSubtypeLocaleDisplayNameInternal(SubtypeUtilsKt.locale(subtype), displayLocale);
     }
@@ -283,7 +283,7 @@ public final class SubtypeLocaleUtils {
 
     @NonNull
     public static String getKeyboardLayoutSetName(final InputMethodSubtype subtype) {
-        String keyboardLayoutSet = subtype.getExtraValueOf(Constants.Subtype.ExtraValue.KEYBOARD_LAYOUT_SET);
+        String keyboardLayoutSet = subtype.getExtraValueOf(KEYBOARD_LAYOUT_SET);
         if (keyboardLayoutSet == null && subtype.isAsciiCapable()) {
             keyboardLayoutSet = QWERTY;
         }
@@ -296,6 +296,6 @@ public final class SubtypeLocaleUtils {
     }
 
     public static String getCombiningRulesExtraValue(final InputMethodSubtype subtype) {
-        return subtype.getExtraValueOf(Constants.Subtype.ExtraValue.COMBINING_RULES);
+        return subtype.getExtraValueOf(COMBINING_RULES);
     }
 }
